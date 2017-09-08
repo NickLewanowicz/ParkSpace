@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */; };
+		27C0D2BB1F6343F600CAFCB6 /* LoginRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */; };
 		27E0C7601F62223B00A349C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0C75F1F62223B00A349C8 /* AppDelegate.swift */; };
 		27E0C7621F62223B00A349C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0C7611F62223B00A349C8 /* ViewController.swift */; };
 		27E0C7651F62223B00A349C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27E0C7631F62223B00A349C8 /* Main.storyboard */; };
@@ -38,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		1E69A113383B21642F7AA3AE /* Pods-ParkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
+		27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginRegisterViewController.xib; sourceTree = "<group>"; };
 		27E0C75C1F62223B00A349C8 /* ParkSpace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParkSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27E0C75F1F62223B00A349C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27E0C7611F62223B00A349C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +106,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		27C0D2B71F6343C100CAFCB6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				27E0C75F1F62223B00A349C8 /* AppDelegate.swift */,
+				27E0C7661F62223C00A349C8 /* Assets.xcassets */,
+				27E0C7681F62223C00A349C8 /* LaunchScreen.storyboard */,
+				27E0C76B1F62223C00A349C8 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		27E0C7531F62223B00A349C8 = {
 			isa = PBXGroup;
 			children = (
@@ -127,12 +142,11 @@
 		27E0C75E1F62223B00A349C8 /* ParkSpace */ = {
 			isa = PBXGroup;
 			children = (
-				27E0C75F1F62223B00A349C8 /* AppDelegate.swift */,
+				27C0D2B71F6343C100CAFCB6 /* Supporting Files */,
 				27E0C7611F62223B00A349C8 /* ViewController.swift */,
 				27E0C7631F62223B00A349C8 /* Main.storyboard */,
-				27E0C7661F62223C00A349C8 /* Assets.xcassets */,
-				27E0C7681F62223C00A349C8 /* LaunchScreen.storyboard */,
-				27E0C76B1F62223C00A349C8 /* Info.plist */,
+				27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */,
+				27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */,
 			);
 			path = ParkSpace;
 			sourceTree = "<group>";
@@ -285,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27E0C76A1F62223C00A349C8 /* LaunchScreen.storyboard in Resources */,
+				27C0D2BB1F6343F600CAFCB6 /* LoginRegisterViewController.xib in Resources */,
 				27E0C7671F62223C00A349C8 /* Assets.xcassets in Resources */,
 				27E0C7651F62223B00A349C8 /* Main.storyboard in Resources */,
 			);
@@ -449,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */,
 				27E0C7621F62223B00A349C8 /* ViewController.swift in Sources */,
 				27E0C7601F62223B00A349C8 /* AppDelegate.swift in Sources */,
 			);
@@ -709,6 +725,7 @@
 				27E0C7861F62223C00A349C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		27E0C7871F62223C00A349C8 /* Build configuration list for PBXNativeTarget "ParkSpaceTests" */ = {
 			isa = XCConfigurationList;
@@ -717,6 +734,7 @@
 				27E0C7891F62223C00A349C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		27E0C78A1F62223C00A349C8 /* Build configuration list for PBXNativeTarget "ParkSpaceUITests" */ = {
 			isa = XCConfigurationList;
@@ -725,6 +743,7 @@
 				27E0C78C1F62223C00A349C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
