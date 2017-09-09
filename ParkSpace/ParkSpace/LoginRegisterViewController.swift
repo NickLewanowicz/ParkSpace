@@ -11,6 +11,8 @@ import ChameleonFramework
 import M13Checkbox
 import TextFieldEffects
 
+import Firebase
+
 class LoginRegisterViewController: UIViewController {
     
     //MARK: Outlets
@@ -23,6 +25,8 @@ class LoginRegisterViewController: UIViewController {
     
     var registerMode   : Bool = true
     var passwordsMatch : Bool = false
+    
+    var mapController : MapViewController?
     
     //MARK: Lifecycle Methods
     override func viewDidLoad() {
@@ -51,6 +55,9 @@ class LoginRegisterViewController: UIViewController {
         
         confirmPasswordTextField.addTarget(self, action: #selector(comparePasswordTextfieldValues), for: UIControlEvents.editingChanged)
         passwordTextField.addTarget(self, action: #selector(comparePasswordTextfieldValues), for: UIControlEvents.editingChanged)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func addScreenElementsAndCallSetupMethods() {
@@ -90,28 +97,88 @@ class LoginRegisterViewController: UIViewController {
         }
     }
     
-    func checkIfUserCanRegister() {
+    func checkIfUserCanRegister() -> Bool {
         if nameTextField.text != nil &&
             emailTextField.text != nil &&
             passwordTextField.text != nil &&
             confirmPasswordTextField.text != nil &&
             passwordsMatch {
-            errorLabel.text = "Success"
+            return true
         } else {
-            errorLabel.text = "Fail"
+            return false
         }
     }
     
     func register() {
-        checkIfUserCanRegister()
+        guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text
+            else {
+                errorLabel.text = "Missing mandatory field(s)"
+                return
+        }
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
+            if error != nil {
+                self.errorLabel.text = "Invalid form entry"
+                print(error.debugDescription)
+                return
+            }
+            guard let uid = user?.uid else {
+                self.errorLabel.text = "Authentication failed"
+                return
+            }
+            
+            //Auth succesful
+            let values = ["name": name, "email": email]
+            self.completeRegistrationWithUser(uid: uid, values: values as [String : AnyObject])
+        })
+    }
+    
+    private func completeRegistrationWithUser(uid: String, values: [String : AnyObject]){
+        let ref = FIRDatabase.database().reference(fromURL: "https://parkspace-ios.firebaseio.com/")
+        let userRef = ref.child("users").child(uid)
+        
+        userRef.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                print(error.debugDescription)
+                self.errorLabel.text = "Network error"
+                return
+            }
+            self.mapController?.nameLabel.text = values["name"] as? String
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     func login() {
-        //TODO: Handle login
+        guard let email = emailTextField.text, let password = passwordTextField.text
+            else {
+                errorLabel.text = "Missing mandatory field(s)"
+                return
+        }
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, loginErr) in
+            if loginErr != nil {
+                self.errorLabel.text = "Invalid email or password"
+                return
+            }
+            self.mapController?.setupComponents()
+            self.dismiss(animated: true, completion: nil)
+        })
     }
     
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height - 30
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0{
+            self.view.frame.origin.y = 0
+        }
     }
     
     //MARK: Event Handlers
@@ -158,9 +225,12 @@ class LoginRegisterViewController: UIViewController {
     }
     
     @IBAction func loginRegisterBtnTapped(_ sender: Any) {
-        //TODO: Authenticate login
         if registerMode {
-            register()
+            if checkIfUserCanRegister() {
+                register()
+            } else {
+                errorLabel.text = "Missing mandatory field(s)"
+            }
         } else {
             login()
         }
@@ -230,7 +300,6 @@ class LoginRegisterViewController: UIViewController {
         box.tintColor = UIColor(hexString: "19E698")!
         box.secondaryTintColor = UIColor(hexString: "FFFFFF")!
         box.translatesAutoresizingMaskIntoConstraints = false
-        //box.addTarget(self, action: #selector(LoginViewController.checkboxClicked), for: UIControlEvents.touchUpInside)
         return box
     }()
     
