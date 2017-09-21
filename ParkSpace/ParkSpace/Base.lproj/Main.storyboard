@@ -22,34 +22,67 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RvI-kc-HCe">
-                                <rect key="frame" x="166.5" y="323" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lg9-PP-Kth">
-                                <rect key="frame" x="16" y="8" width="48" height="30"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fnj-Qu-Uv5" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvB-e1-7gg">
+                                <rect key="frame" x="16" y="40" width="42" height="38"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="BvC-1H-EAe"/>
-                                    <constraint firstAttribute="height" constant="30" id="ecd-r4-Iae"/>
+                                    <constraint firstAttribute="width" constant="42" id="5Dy-sN-6vd"/>
+                                    <constraint firstAttribute="height" constant="38" id="nQz-1K-RsS"/>
                                 </constraints>
-                                <state key="normal" title="Logout"/>
+                                <state key="normal" image="NavBarIcon"/>
                                 <connections>
-                                    <action selector="logoutBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8hB-h5-eE8"/>
+                                    <action selector="navBarButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zRe-Iq-Qtj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uyv-u3-CxX">
+                                <rect key="frame" x="317" y="40" width="42" height="38"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="6Jt-0l-fZ3"/>
+                                    <constraint firstAttribute="width" constant="42" id="Wu0-QU-as1"/>
+                                </constraints>
+                                <state key="normal" image="locate"/>
+                            </button>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0LR-Ko-GkX">
+                                <rect key="frame" x="66" y="40" width="243" height="38"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="ubH-gk-onq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Search ParkSpace">
+                                    <color key="titleColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="searchBarTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9XV-f1-WK8"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="lg9-PP-Kth" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-12" id="ByB-7N-9TZ"/>
-                            <constraint firstItem="RvI-kc-HCe" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="WUr-79-aqc"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="lg9-PP-Kth" secondAttribute="leading" id="ZVB-Rm-p5W"/>
-                            <constraint firstItem="RvI-kc-HCe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wOK-9D-aeT"/>
+                            <constraint firstItem="0LR-Ko-GkX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="HzS-Qc-ffu"/>
+                            <constraint firstItem="fnj-Qu-Uv5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Rgz-Tw-kUt"/>
+                            <constraint firstAttribute="trailing" secondItem="fnj-Qu-Uv5" secondAttribute="trailing" id="U5H-eo-xWS"/>
+                            <constraint firstItem="JvB-e1-7gg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="U5P-F5-hH1"/>
+                            <constraint firstItem="fnj-Qu-Uv5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="f2d-IV-G0S"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Uyv-u3-CxX" secondAttribute="trailing" id="fwA-MC-ed9"/>
+                            <constraint firstItem="Uyv-u3-CxX" firstAttribute="leading" secondItem="0LR-Ko-GkX" secondAttribute="trailing" constant="8" id="nb2-uI-oKN"/>
+                            <constraint firstItem="Uyv-u3-CxX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="qAh-Od-eZ6"/>
+                            <constraint firstItem="0LR-Ko-GkX" firstAttribute="leading" secondItem="JvB-e1-7gg" secondAttribute="trailing" constant="8" id="v9U-WM-5lD"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fnj-Qu-Uv5" secondAttribute="bottom" id="vyu-yX-RXE"/>
+                            <constraint firstItem="JvB-e1-7gg" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="wdf-kE-vsl"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="nameLabel" destination="RvI-kc-HCe" id="I3J-Ov-LwY"/>
+                        <outlet property="gMapView" destination="fnj-Qu-Uv5" id="YLh-MN-8gs"/>
+                        <outlet property="locateButton" destination="Uyv-u3-CxX" id="wWB-0X-RP1"/>
+                        <outlet property="navBarButton" destination="JvB-e1-7gg" id="tgU-VF-GE9"/>
+                        <outlet property="searchBarButton" destination="0LR-Ko-GkX" id="its-nr-plz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -57,4 +90,8 @@
             <point key="canvasLocation" x="24.800000000000001" y="36.431784107946029"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NavBarIcon" width="18" height="12"/>
+        <image name="locate" width="17" height="19"/>
+    </resources>
 </document>

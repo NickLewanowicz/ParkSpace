@@ -85,7 +85,7 @@ class LoginRegisterViewController: UIViewController {
     }
     
     func comparePasswordTextfieldValues(){
-        if passwordTextField.text == confirmPasswordTextField.text && passwordTextField.text != "" && confirmPasswordTextField.text != "" {
+        if passwordTextField.text! == confirmPasswordTextField.text! && passwordTextField.text != "" && confirmPasswordTextField.text != "" && (passwordTextField.text?.characters.count)! >= 6 {
             self.passwordsMatch = true
             passwordCheckmark.isHidden = false
             confirmPasswordCheckmark.isHidden = false
@@ -110,6 +110,10 @@ class LoginRegisterViewController: UIViewController {
     }
     
     func register() {
+        if (passwordTextField.text?.characters.count)! < 6 {
+            self.errorLabel.text = "Password must be at least 6 characters"
+            return
+        }
         guard let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text
             else {
                 errorLabel.text = "Missing mandatory field(s)"
@@ -142,7 +146,7 @@ class LoginRegisterViewController: UIViewController {
                 self.errorLabel.text = "Network error"
                 return
             }
-            self.mapController?.nameLabel.text = values["name"] as? String
+            //self.mapController?.nameLabel.text = values["name"] as? String
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -199,6 +203,12 @@ class LoginRegisterViewController: UIViewController {
             
             self.termsBtn.setTitle("Forgot password?", for: .normal)
             
+            self.nameTextField.text = ""
+            self.emailTextField.text = ""
+            self.passwordTextField.text = ""
+            self.confirmPasswordTextField.text = ""
+            self.passwordCheckmark.isHidden = true
+            self.confirmPasswordCheckmark.isHidden = true
             registerMode = false
         }
     }
@@ -219,6 +229,13 @@ class LoginRegisterViewController: UIViewController {
             self.termsText.isHidden = false
             
             self.termsBtn.setTitle("Terms of Service", for: .normal)
+            
+            self.nameTextField.text = ""
+            self.emailTextField.text = ""
+            self.passwordTextField.text = ""
+            self.confirmPasswordTextField.text = ""
+            self.passwordCheckmark.isHidden = true
+            self.confirmPasswordCheckmark.isHidden = true
             
             registerMode = true
         }
