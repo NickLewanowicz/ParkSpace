@@ -3,7 +3,7 @@ COMP3004 Project - ParkSpace
 ![IMG](https://i.imgur.com/JeFpQgA.png)
 
 | Name  | Email | Student Number |
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- |
 | Nicholas Lewanowicz | nicholas.lewanowicz@carleton.ca | 100937167  |
 | Mathieu Schmid  | mathieu.schmid@carleton.ca | 100970437  |
 | Connor Maloney  | connor.maloney@carleton.ca | 100977005  |
