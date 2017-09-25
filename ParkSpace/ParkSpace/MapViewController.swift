@@ -11,7 +11,7 @@ import Firebase
 import GoogleMaps
 import GooglePlaces
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, SWRevealViewControllerDelegate {
 
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var searchBarButton: UIButton!
@@ -23,6 +23,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.revealViewController().delegate = self as! SWRevealViewControllerDelegate
+        
+        self.revealViewController().delegate = self
+        
+        sideMenus()
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -94,8 +100,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         present(autocompleteController, animated: true, completion: nil)
     }
     
-    @IBAction func navBarButtonTapped(_ sender: UIButton) {
-        handleLogout()
+    // Calls Sidemenu
+    func sideMenus() {
+        
+        if revealViewController() != nil {
+            navBarButton.addTarget(revealViewController, action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+
+            revealViewController().rearViewRevealWidth = 275
+            revealViewController().rightViewRevealWidth = 160
+            
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+ 
+        }
+        
     }
 }
 
