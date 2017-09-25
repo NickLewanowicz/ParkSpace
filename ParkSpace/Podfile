@@ -16,9 +16,6 @@ target 'ParkSpace' do
   pod 'Firebase/Core', :inhibit_warnings => true
   pod 'Firebase/Database’
   pod 'Firebase/Auth’
-  
-  pod 'GoogleMaps'
-  pod 'GooglePlaces'
 
   target 'ParkSpaceTests' do
     inherit! :search_paths
