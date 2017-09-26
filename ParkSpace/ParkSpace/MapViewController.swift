@@ -98,6 +98,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         present(autocompleteController, animated: true, completion: nil)
     }
     
+    
     func sideMenus() {
         if revealViewController() != nil {
             navBarButton.addTarget(revealViewController, action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
@@ -105,6 +106,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
             revealViewController().rightViewRevealWidth = 160
         }
     }
+ 
 }
 
 extension MapViewController {
