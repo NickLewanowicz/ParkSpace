@@ -1,0 +1,4 @@
+Week 2 log:
+
+4hrs: Finalized mockups for map screen and added mockups to D1 slides and PDF
+4hrs: Started on implementation of login/register screen and Firebase authentication in Swift

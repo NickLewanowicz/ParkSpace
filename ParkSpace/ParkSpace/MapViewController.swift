@@ -11,24 +11,29 @@ import Firebase
 import GoogleMaps
 import GooglePlaces
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, SWRevealViewControllerDelegate {
 
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var searchBarButton: UIButton!
     @IBOutlet weak var locateButton: UIButton!
     
     @IBOutlet weak var gMapView: GMSMapView!
-    
     let locationManager = CLLocationManager()
+    
+    var isSideMenuOpen : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Call sidemenu on load
+        self.revealViewController().delegate = self
+        sideMenus()
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         gMapView.isMyLocationEnabled = true
+        gMapView.settings.myLocationButton = true
         
         self.view.addSubview(gMapView)
         self.view.bringSubview(toFront: navBarButton)
@@ -71,7 +76,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         }
         FIRDatabase.database().reference().child("users").child(uid).observe(.value, with: { (snapshot) in
             if let dict = snapshot.value as? [String : AnyObject] {
-                //self.nameLabel.text = dict["name"] as? String
                 print("\(String(describing: dict["name"] as? String))")
             }
         })
@@ -87,6 +91,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         loginRegisterViewController.mapController = self
         present(loginRegisterViewController, animated: true, completion: nil)
     }
+    
+    func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+        
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
 
     @IBAction func searchBarTapped(_ sender: UIButton) {
         let autocompleteController = GMSAutocompleteViewController()
@@ -94,7 +110,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         present(autocompleteController, animated: true, completion: nil)
     }
     
-    @IBAction func navBarButtonTapped(_ sender: UIButton) {
+    
+    func sideMenus() {
+        if revealViewController() != nil {
+            navBarButton.addTarget(revealViewController, action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+            revealViewController().rearViewRevealWidth = 275
+            revealViewController().rightViewRevealWidth = 160
+            
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+    }
+
+    @IBAction func locateButtonTapped(_ sender: UIButton) {
         handleLogout()
     }
 }
@@ -116,8 +143,9 @@ extension MapViewController {
         self.gMapView.camera = camera
         self.gMapView.isMyLocationEnabled = true
         
+        //Add a marker on your current location
         let marker = GMSMarker(position: center)
-        
+        marker.icon = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30)
         print("Latitude :- \(userLocation!.coordinate.latitude)")
         print("Longitude :-\(userLocation!.coordinate.longitude)")
         marker.map = self.gMapView
