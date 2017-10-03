@@ -43,7 +43,6 @@ PODS:
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.9)
   - M13Checkbox (3.1.3)
-  - SideMenu (2.3.0)
   - TextFieldEffects (1.3.2)
 
 DEPENDENCIES:
@@ -54,7 +53,6 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - M13Checkbox
-  - SideMenu
   - TextFieldEffects
 
 EXTERNAL SOURCES:
@@ -79,9 +77,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
-  SideMenu: 43d092cf615cf472f105c5b9867a21beff9fc269
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
 
-PODFILE CHECKSUM: 1fbb36b3d740dcaaad63195c700e354dac21e270
+PODFILE CHECKSUM: aceee69167671b8741eb97cc06d2ff0c993ee20d
 
 COCOAPODS: 1.3.1

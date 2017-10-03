@@ -10,7 +10,6 @@ target 'ParkSpace' do
   # Pods for ParkSpace
   pod 'M13Checkbox', :inhibit_warnings => true
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
-  pod 'SideMenu'
   pod 'TextFieldEffects'
   
   pod 'Firebase/Core', :inhibit_warnings => true
