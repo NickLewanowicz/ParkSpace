@@ -1,0 +1,5 @@
+Week 1 log
+
+4hrs: Designed mockups for login/register screen as well as started map screen.
+2hrs: Discussed with team who will be assigned to what parts of the project during the term.
+2hrs: Looked into Google Maps iOS API as well as Firebase intergration on iOS

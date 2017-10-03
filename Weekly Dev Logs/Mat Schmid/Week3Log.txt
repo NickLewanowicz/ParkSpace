@@ -1,0 +1,4 @@
+Week 2 log:
+
+6hrs: Finalized login/register screen implementation with Firebase authentication.
+2hrs: Implemented Google Maps API in project
