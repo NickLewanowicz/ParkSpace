@@ -1,4 +1,4 @@
 ### CocoaPods ###
 Pods/
-.DS_Store
+*.DS_Store
 ParkSpace.xcworkspace/xcuserdata/
