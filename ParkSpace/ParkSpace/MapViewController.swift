@@ -106,7 +106,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
 
     @IBAction func searchBarTapped(_ sender: UIButton) {
         let autocompleteController = GMSAutocompleteViewController()
+        let filter = GMSAutocompleteFilter()
+        filter.country = "CA"
         autocompleteController.delegate = self
+        autocompleteController.autocompleteFilter = filter
         present(autocompleteController, animated: true, completion: nil)
     }
     
@@ -139,7 +142,7 @@ extension MapViewController {
         let userLocation = locations.last
         let center = CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude)
         
-        let camera = GMSCameraPosition.camera(withLatitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude, zoom: 15);
+        let camera = GMSCameraPosition.camera(withLatitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude, zoom: 16);
         self.gMapView.camera = camera
         self.gMapView.isMyLocationEnabled = true
         

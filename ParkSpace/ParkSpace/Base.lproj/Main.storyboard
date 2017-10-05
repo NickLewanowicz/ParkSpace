@@ -348,6 +348,9 @@
                                 <state key="normal" title="Register spot">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="registerSpotButtonTapped:" destination="WO6-Vj-rJ6" eventType="touchUpInside" id="FZn-ql-EPe"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vo3-Oo-QUq">
                                 <rect key="frame" x="48" y="188" width="110" height="15"/>
@@ -598,6 +601,15 @@
                                     <action selector="toTimeSlotTapped:" destination="WO6-Vj-rJ6" eventType="touchUpInside" id="B9J-gK-KDG"/>
                                 </connections>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ERROR LABEL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="eZt-eQ-XkC">
+                                <rect key="frame" x="48" y="626" width="279" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="GfS-30-RDJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -634,10 +646,13 @@
                             <constraint firstItem="4r3-XY-Qsf" firstAttribute="top" secondItem="Wwe-ap-TP4" secondAttribute="bottom" constant="1" id="gEb-Lx-gBL"/>
                             <constraint firstItem="Wwe-ap-TP4" firstAttribute="centerX" secondItem="N7g-oh-L4X" secondAttribute="centerX" constant="18" id="mPY-De-Lo0"/>
                             <constraint firstItem="UJD-cy-ygY" firstAttribute="top" secondItem="kcl-aP-JrH" secondAttribute="bottom" constant="4" id="o3c-KO-hib"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eZt-eQ-XkC" secondAttribute="trailing" constant="32" id="pVH-wX-53r"/>
                             <constraint firstItem="UJD-cy-ygY" firstAttribute="leading" secondItem="N7g-oh-L4X" secondAttribute="leadingMargin" constant="32" id="poT-JL-Bi2"/>
                             <constraint firstItem="4r3-XY-Qsf" firstAttribute="leading" secondItem="Pd0-Fw-WDD" secondAttribute="trailing" constant="16" id="q77-W9-xb1"/>
+                            <constraint firstItem="eZt-eQ-XkC" firstAttribute="top" secondItem="IEv-88-xEj" secondAttribute="bottom" constant="8" id="qVw-ci-s43"/>
                             <constraint firstItem="Vo3-Oo-QUq" firstAttribute="leading" secondItem="N7g-oh-L4X" secondAttribute="leadingMargin" constant="32" id="r8g-5Q-38r"/>
                             <constraint firstItem="kcl-aP-JrH" firstAttribute="leading" secondItem="N7g-oh-L4X" secondAttribute="leadingMargin" constant="32" id="sFE-GN-umT"/>
+                            <constraint firstItem="eZt-eQ-XkC" firstAttribute="leading" secondItem="N7g-oh-L4X" secondAttribute="leadingMargin" constant="32" id="tE7-Oe-xNW"/>
                             <constraint firstItem="WFw-qt-wtM" firstAttribute="top" secondItem="ad5-VZ-zCJ" secondAttribute="bottom" constant="10" id="tzh-nr-Siy"/>
                             <constraint firstItem="4r3-XY-Qsf" firstAttribute="leading" secondItem="Wwe-ap-TP4" secondAttribute="leading" id="wGw-qM-kca"/>
                             <constraint firstItem="hOj-8f-yr5" firstAttribute="top" secondItem="WFw-qt-wtM" secondAttribute="bottom" constant="9" id="wYT-Es-XZI"/>
@@ -647,6 +662,7 @@
                     </view>
                     <connections>
                         <outlet property="addressFieldButton" destination="9dU-f6-Ekh" id="3ql-Fw-nIw"/>
+                        <outlet property="errorLabel" destination="eZt-eQ-XkC" id="Ajf-e7-dxz"/>
                         <outlet property="fridayButton" destination="9UH-ka-Pez" id="C6O-Xc-QSE"/>
                         <outlet property="fromTimeSlotField" destination="Pd0-Fw-WDD" id="riL-nt-m0a"/>
                         <outlet property="mondayButton" destination="yaf-rn-Kh3" id="3xZ-Ah-LU0"/>
