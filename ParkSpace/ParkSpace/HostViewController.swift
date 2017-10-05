@@ -37,13 +37,15 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
     var spotAvailableTo   : Int? = nil //minutes since the start of day, > spotAvailableFrom
     var spotHourlyPrice   : Double? = nil //Hourly rate in CAD
     
+    var arrayOfDays : [UIButton] = []
+    
     //MARK: Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.revealViewController().delegate = self
         sideMenus()
-        
+        setupProperties()
         setupUIElements()
     }
     
@@ -64,7 +66,7 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
             self.spotAvailableDays[sender.tag - 1] = 1
         } else {
             sender.backgroundColor = UIColor.white
-            sender.setTitleColor( UIColor(hexString: "555555")!, for: .normal)
+            sender.setTitleColor(UIColor(hexString: "555555")!, for: .normal)
             self.spotAvailableDays[sender.tag - 1] = 0
         }
     }
@@ -108,16 +110,19 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
         let userID = FIRAuth.auth()?.currentUser?.uid
         let timestamp = Int(NSDate.timeIntervalSinceReferenceDate)
         let values = ["userID": userID!, "address": spotAddress!, "city": spotCity!, "latitude": spotLatitude!, "longitude": spotLongitude!, "availableDays": spotAvailableDays, "fromTime": spotAvailableFrom!, "toTime": spotAvailableTo!, "rate": spotHourlyPrice!, "timestamp": timestamp] as [String : Any]
-        //childRef.updateChildValues(values)
         
         childRef.updateChildValues(values) { (err, ref) in
             if err != nil {
                 print(err.debugDescription)
-                errorLabel.text = "Network error."
+                self.errorLabel.text = "Network error."
                 return
             }
             //Success
-            self.errorLabel.text = "Spot posted!"
+            let alert = UIAlertController(title: "Success!", message: "Your spot at \(self.spotAddress!) has been posted.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
+                self.resetFields()
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -183,47 +188,46 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
         return true
     }
     
+    func resetFields() {
+        self.addressFieldButton.setTitle("Search your space", for: .normal)
+        for day in arrayOfDays {
+            day.backgroundColor = UIColor.white
+            day.setTitleColor( UIColor(hexString: "555555")!, for: .normal)
+        }
+        self.fromTimeSlotField.text = nil
+        self.toTimeSlotField.text = nil
+        self.priceSlider.value = 1.50
+        
+        spotLatitude = nil
+        spotLongitude = nil
+        spotAddress = nil
+        spotCity = nil
+        spotAvailableDays = [0,0,0,0,0,0,0]
+        spotAvailableFrom = nil
+        spotAvailableTo = nil
+        spotHourlyPrice = nil
+    }
+    
+    func setupProperties() {
+        priceSlider.minimumValue = 0.50
+        priceSlider.maximumValue = 4.00
+        priceSlider.value = 1.50
+        spotHourlyPrice = Double(priceSlider.value)
+        errorLabel.text = nil
+        arrayOfDays = [mondayButton, tuesdayButton, wednesdayButton, thursdayButton, fridayButton, saturdayButton, sundayButton]
+    }
+    
     fileprivate func setupUIElements() {
         navBarButton.tintColor = UIColor.darkGray
         registerSpotButton.layer.cornerRadius = 6
         addressFieldButton.layer.borderWidth = 1
         addressFieldButton.layer.borderColor = UIColor.darkGray.cgColor
         
-        mondayButton.layer.cornerRadius = 4
-        mondayButton.layer.borderWidth = 1
-        mondayButton.layer.borderColor = UIColor.darkGray.cgColor
-        
-        tuesdayButton.layer.cornerRadius = 4
-        tuesdayButton.layer.borderWidth = 1
-        tuesdayButton.layer.borderColor = UIColor.darkGray.cgColor
-        
-        wednesdayButton.layer.cornerRadius = 4
-        wednesdayButton.layer.borderWidth = 1
-        wednesdayButton.layer.borderColor = UIColor.darkGray.cgColor
-        
-        thursdayButton.layer.cornerRadius = 4
-        thursdayButton.layer.borderWidth = 1
-        thursdayButton.layer.borderColor = UIColor.darkGray.cgColor
-        
-        fridayButton.layer.cornerRadius = 4
-        fridayButton.layer.borderWidth = 1
-        fridayButton.layer.borderColor = UIColor.darkGray.cgColor
-        
-        saturdayButton.layer.cornerRadius = 4
-        saturdayButton.layer.borderWidth = 1
-        saturdayButton.layer.borderColor = UIColor.darkGray.cgColor
-        
-        sundayButton.layer.cornerRadius = 4
-        sundayButton.layer.borderWidth = 1
-        sundayButton.layer.borderColor = UIColor.darkGray.cgColor
-        
-        priceSlider.minimumValue = 0.50
-        priceSlider.maximumValue = 4.00
-        priceSlider.value = 1.50
-        
-        spotHourlyPrice = Double(priceSlider.value)
-        
-        errorLabel.text = nil
+        for day in arrayOfDays {
+            day.layer.cornerRadius = 4
+            day.layer.borderWidth = 1
+            day.layer.borderColor = UIColor.darkGray.cgColor
+        }
     }
 }
 
