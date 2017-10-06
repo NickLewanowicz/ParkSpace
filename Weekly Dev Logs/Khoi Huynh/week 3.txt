@@ -1,0 +1,4 @@
+WEEK 3 LOG:
+
+~3h: came up with solutions to pull up "closest" parking spots
+~3h: researched on implementing solutions into back-end code. 

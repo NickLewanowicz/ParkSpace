@@ -1,0 +1,4 @@
+WEEK 2 LOG:
+
+~2h: gathering information needed for client response
+~2h: created mock JSON objects for front-end team

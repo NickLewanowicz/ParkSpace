@@ -1,0 +1,5 @@
+WEEK 1 LOG:
+
+~1h: discussing with team members their rolls for this project (who will be doing front-end/back-end)
+~2h: discussing user experience of the application with team
+~2h: researched about different types of backend plateforms that would be suitible for the application
