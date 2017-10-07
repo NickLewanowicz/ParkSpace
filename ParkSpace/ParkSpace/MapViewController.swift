@@ -41,6 +41,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         self.view.bringSubview(toFront: locateButton)
         
         setupUIElements()
+        
+        loadMarkersFromDB()
     }
     
     func setupUIElements() {
@@ -126,6 +128,38 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
 
     @IBAction func locateButtonTapped(_ sender: UIButton) {
         handleLogout()
+    }
+    
+    func loadMarkersFromDB() {
+        let ref = FIRDatabase.database().reference().child("spots")
+        ref.observe(.childAdded, with: { (snapshot) in
+            if snapshot.value as? [String : AnyObject] != nil {
+                self.gMapView.clear()
+                //print("************************")
+                //print(snapshot.value!)
+                
+                guard let spot = snapshot.value as? [String : AnyObject] else {
+                    return
+                }
+                
+                let latitude = spot["latitude"]
+                let longitude = spot["longitude"]
+                let address = spot["address"]
+                let rate = spot["rate"]
+                
+                DispatchQueue.main.async(execute: {
+                    let marker = GMSMarker()
+                    marker.position = CLLocationCoordinate2D(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
+                    marker.title = address as? String
+                    marker.snippet = "$\(String(format:"%.02f", (rate as? Float)!))/hr"
+                    marker.icon = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30)
+                    marker.map = self.gMapView
+                })
+            }
+            
+            
+            
+        }, withCancel: nil)
     }
 }
 
