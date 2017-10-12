@@ -1,0 +1,4 @@
+Week 4 Dev log:
+
+2hrs: Improved design mockup of host spot view
+6hrs: Implemented Firebase onto map view in order to see hosted spots on map
