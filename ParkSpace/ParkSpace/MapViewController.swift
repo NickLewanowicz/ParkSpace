@@ -28,6 +28,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         self.revealViewController().delegate = self
         sideMenus()
         
+        do {
+            // Set the map style by passing the URL of the local file.
+            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
+                gMapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+            } else {
+                NSLog("Unable to find style.json")
+            }
+        } catch {
+            NSLog("One or more of the map styles failed to load. \(error)")
+        }
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -41,23 +52,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         self.view.bringSubview(toFront: locateButton)
         
         setupUIElements()
-        
         loadMarkersFromDB()
     }
     
     func setupUIElements() {
+        navBarButton.tintColor = UIColor.white
+        locateButton.tintColor = UIColor.white
         self.navBarButton.layer.cornerRadius = 8
         self.navBarButton.layer.borderWidth = 1
-        self.navBarButton.layer.borderColor = UIColor.gray.cgColor
+        self.navBarButton.layer.borderColor = UIColor.white.cgColor
         
         self.searchBarButton.layer.cornerRadius = 8
         self.searchBarButton.layer.borderWidth = 1
-        self.searchBarButton.layer.borderColor = UIColor.gray.cgColor
+        self.searchBarButton.layer.borderColor = UIColor.white.cgColor
         
         self.locateButton.layer.cornerRadius = 8
         self.locateButton.layer.borderWidth = 1
-        self.locateButton.layer.borderColor = UIColor.gray.cgColor
+        self.locateButton.layer.borderColor = UIColor.white.cgColor
         
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,9 +151,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         ref.observe(.childAdded, with: { (snapshot) in
             if snapshot.value as? [String : AnyObject] != nil {
                 self.gMapView.clear()
-                //print("************************")
-                //print(snapshot.value!)
-                
                 guard let spot = snapshot.value as? [String : AnyObject] else {
                     return
                 }
@@ -180,14 +193,6 @@ extension MapViewController {
         self.gMapView.camera = camera
         self.gMapView.isMyLocationEnabled = true
         
-        //Add a marker on your current location
-        let marker = GMSMarker(position: center)
-        marker.icon = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30)
-        print("Latitude :- \(userLocation!.coordinate.latitude)")
-        print("Longitude :-\(userLocation!.coordinate.longitude)")
-        marker.map = self.gMapView
-        
-        marker.title = "Current Location"
         locationManager.stopUpdatingLocation()
     }
 }
