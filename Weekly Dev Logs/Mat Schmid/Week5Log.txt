@@ -1,0 +1,4 @@
+Week 5 Dev Log:
+
+-4hrs: Discussed back end functionality with team regarding when to trigger end points
+-4hrs: Converted map view to night mode theme
