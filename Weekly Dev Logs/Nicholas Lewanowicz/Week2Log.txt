@@ -1,6 +1,6 @@
 Week 2 log:
 
 4hrs: worked with team to finish D1 slides and PDF
-4hrs: Started working with AWS to find out how we could use it to fulfill our backend requirements
 2hrs: discussed with Matt how the front and backend would communicate
+2hrs: Work with khoi to define JSON api structure for spots and user data
 
