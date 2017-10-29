@@ -1,0 +1,5 @@
+Week 3 log:
+
+
+4hrs: Started working with AWS to find out how we could use it to fulfill our backend requirements
+2hrs: Worked with Khoi to prototype some lambda functions

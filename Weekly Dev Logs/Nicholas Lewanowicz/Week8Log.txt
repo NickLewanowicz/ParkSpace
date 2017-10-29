@@ -1,0 +1,4 @@
+Week 8 Dev Log:
+
+-5hrs: Worked with team over reading week to finish D2
+-3hrs: Work with khoi to make getNearest() function for firebase

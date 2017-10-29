@@ -1,0 +1,4 @@
+Week 5 Dev Log:
+
+-2hrs: Define the role of backend functions with team to find what we want to offload
+-3hrs: Commit to a schema for UI to work with so we can sync up work

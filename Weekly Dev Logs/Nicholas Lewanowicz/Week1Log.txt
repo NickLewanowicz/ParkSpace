@@ -1,0 +1,7 @@
+Week 1 log
+
+2hrs: Discussed possible concepts and ideas for what app we want to make with team.
+2hrs: Met with team to define project roles and responsibilities
+1hrs: Worked with Matt to refine design for login/register.
+1hrs: Research good backend solutions for our ParkSpace app.
+

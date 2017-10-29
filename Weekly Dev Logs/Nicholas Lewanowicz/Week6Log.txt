@@ -1,0 +1,4 @@
+Week 6 Dev Log:
+
+-2hrs: Switch to Firebase functions to manage backend logic, discussed implications with khoi.
+-3hrs: Setup firebase functions, initialized folders, etc.
