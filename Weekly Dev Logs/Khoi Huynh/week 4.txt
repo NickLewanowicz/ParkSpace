@@ -1,0 +1,4 @@
+WEEK 4 LOG:
+
+~2h: Practice presentation for D1
+~2h: researched with team on Firebase functions vs AWS

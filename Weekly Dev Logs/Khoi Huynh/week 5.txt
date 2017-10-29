@@ -1,0 +1,3 @@
+Week 5:
+
+-3hrs: dicipher to a schema so that UI and Backend team can sync up work
