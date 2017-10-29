@@ -1,4 +1,4 @@
 Week 6:
 
 -1hrs: discussed back-end logic using Firebase with team
--2hrs: Setup firebase
+-2hrs: Setup firebase and stuff 
