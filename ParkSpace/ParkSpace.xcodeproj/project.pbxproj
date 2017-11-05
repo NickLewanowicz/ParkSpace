@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */; };
 		27BB40541F92BBEA00A55E45 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = 27BB40531F92BBEA00A55E45 /* style.json */; };
 		27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */; };
 		27C0D2BB1F6343F600CAFCB6 /* LoginRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */; };
@@ -48,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		1E69A113383B21642F7AA3AE /* Pods-ParkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		27BB40531F92BBEA00A55E45 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
 		27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginRegisterViewController.xib; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				DD87C6971F796E8B00832D8F /* ParkSpace-Bridging-Header.h */,
 				27E0C76B1F62223C00A349C8 /* Info.plist */,
 				27BB40531F92BBEA00A55E45 /* style.json */,
+				279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				DD87C69E1F79AB5B00832D8F /* ProfileViewController.swift in Sources */,
 				27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */,
 				27E0C7621F62223B00A349C8 /* MapViewController.swift in Sources */,
+				279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */,
 				27E0C7601F62223B00A349C8 /* AppDelegate.swift in Sources */,
 				DD87C69A1F796E8C00832D8F /* SWRevealViewController.m in Sources */,
 				DD87C6A61F7A99D000832D8F /* HostViewController.swift in Sources */,
