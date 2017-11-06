@@ -11,7 +11,7 @@ import Firebase
 import GoogleMaps
 import GooglePlaces
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, SWRevealViewControllerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate  {
 
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var searchBarButton: UIButton!
@@ -20,13 +20,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     @IBOutlet weak var gMapView: GMSMapView!
     let locationManager = CLLocationManager()
     
-    var isSideMenuOpen : Bool = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Call sidemenu on load
-        self.revealViewController().delegate = self
-        sideMenus()
         
         do {
             // Set the map style by passing the URL of the local file.
@@ -47,7 +43,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         gMapView.settings.myLocationButton = true
         
         self.view.addSubview(gMapView)
-        self.view.bringSubview(toFront: navBarButton)
         self.view.bringSubview(toFront: searchBarButton)
         self.view.bringSubview(toFront: locateButton)
         
@@ -56,11 +51,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     }
     
     func setupUIElements() {
-        navBarButton.tintColor = UIColor.white
         locateButton.tintColor = UIColor.white
-        self.navBarButton.layer.cornerRadius = 8
-        self.navBarButton.layer.borderWidth = 1
-        self.navBarButton.layer.borderColor = UIColor.white.cgColor
         
         self.searchBarButton.layer.cornerRadius = 8
         self.searchBarButton.layer.borderWidth = 1
@@ -129,17 +120,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         autocompleteController.delegate = self
         autocompleteController.autocompleteFilter = filter
         present(autocompleteController, animated: true, completion: nil)
-    }
-    
-    
-    func sideMenus() {
-        if revealViewController() != nil {
-            navBarButton.addTarget(revealViewController, action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-            revealViewController().rearViewRevealWidth = 275
-            revealViewController().rightViewRevealWidth = 160
-            
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
     }
 
     @IBAction func locateButtonTapped(_ sender: UIButton) {
