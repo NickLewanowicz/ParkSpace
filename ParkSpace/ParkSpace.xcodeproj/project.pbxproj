@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */; };
 		27BB40541F92BBEA00A55E45 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = 27BB40531F92BBEA00A55E45 /* style.json */; };
 		27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */; };
 		27C0D2BB1F6343F600CAFCB6 /* LoginRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */; };
@@ -21,10 +22,6 @@
 		33E25C71475646E936483E19 /* Pods_ParkSpaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB312A9A1E0E8644C0DD598F /* Pods_ParkSpaceTests.framework */; };
 		62B47156F5F15FCBF36E067E /* Pods_ParkSpace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87913D992E33F19452DF3460 /* Pods_ParkSpace.framework */; };
 		C73F58F511F2F4B3C5C61C9E /* Pods_ParkSpaceUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48041C091B643E2C703AC50 /* Pods_ParkSpaceUITests.framework */; };
-		DD87C69A1F796E8C00832D8F /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD87C6991F796E8C00832D8F /* SWRevealViewController.m */; };
-		DD87C69C1F79A96200832D8F /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87C69B1F79A96200832D8F /* HelpViewController.swift */; };
-		DD87C69E1F79AB5B00832D8F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87C69D1F79AB5B00832D8F /* ProfileViewController.swift */; };
-		DD87C6A21F79AE4D00832D8F /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87C6A11F79AE4D00832D8F /* HistoryViewController.swift */; };
 		DD87C6A41F79AE5B00832D8F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87C6A31F79AE5B00832D8F /* SettingsViewController.swift */; };
 		DD87C6A61F7A99D000832D8F /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87C6A51F7A99D000832D8F /* HostViewController.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		1E69A113383B21642F7AA3AE /* Pods-ParkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		27BB40531F92BBEA00A55E45 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
 		27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginRegisterViewController.xib; sourceTree = "<group>"; };
@@ -71,12 +69,6 @@
 		87913D992E33F19452DF3460 /* Pods_ParkSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ParkSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A52063DFD5BA315FD7BC0714 /* Pods-ParkSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpace/Pods-ParkSpace.debug.xcconfig"; sourceTree = "<group>"; };
 		C48041C091B643E2C703AC50 /* Pods_ParkSpaceUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ParkSpaceUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD87C6971F796E8B00832D8F /* ParkSpace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParkSpace-Bridging-Header.h"; sourceTree = "<group>"; };
-		DD87C6981F796E8C00832D8F /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		DD87C6991F796E8C00832D8F /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		DD87C69B1F79A96200832D8F /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
-		DD87C69D1F79AB5B00832D8F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		DD87C6A11F79AE4D00832D8F /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		DD87C6A31F79AE5B00832D8F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DD87C6A51F7A99D000832D8F /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
 		F3A0F418D18E8A77CAC90A9A /* Pods-ParkSpaceUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceUITests/Pods-ParkSpaceUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,11 +123,9 @@
 				27E0C75F1F62223B00A349C8 /* AppDelegate.swift */,
 				27E0C7661F62223C00A349C8 /* Assets.xcassets */,
 				27E0C7681F62223C00A349C8 /* LaunchScreen.storyboard */,
-				DD87C6981F796E8C00832D8F /* SWRevealViewController.h */,
-				DD87C6991F796E8C00832D8F /* SWRevealViewController.m */,
-				DD87C6971F796E8B00832D8F /* ParkSpace-Bridging-Header.h */,
 				27E0C76B1F62223C00A349C8 /* Info.plist */,
 				27BB40531F92BBEA00A55E45 /* style.json */,
+				279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -168,10 +158,7 @@
 				27C0D2B71F6343C100CAFCB6 /* Supporting Files */,
 				27E0C7631F62223B00A349C8 /* Main.storyboard */,
 				27E0C7611F62223B00A349C8 /* MapViewController.swift */,
-				DD87C69D1F79AB5B00832D8F /* ProfileViewController.swift */,
-				DD87C69B1F79A96200832D8F /* HelpViewController.swift */,
 				DD87C6A51F7A99D000832D8F /* HostViewController.swift */,
-				DD87C6A11F79AE4D00832D8F /* HistoryViewController.swift */,
 				DD87C6A31F79AE5B00832D8F /* SettingsViewController.swift */,
 				27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */,
 				27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */,
@@ -552,14 +539,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD87C69E1F79AB5B00832D8F /* ProfileViewController.swift in Sources */,
 				27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */,
 				27E0C7621F62223B00A349C8 /* MapViewController.swift in Sources */,
+				279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */,
 				27E0C7601F62223B00A349C8 /* AppDelegate.swift in Sources */,
-				DD87C69A1F796E8C00832D8F /* SWRevealViewController.m in Sources */,
 				DD87C6A61F7A99D000832D8F /* HostViewController.swift in Sources */,
-				DD87C69C1F79A96200832D8F /* HelpViewController.swift in Sources */,
-				DD87C6A21F79AE4D00832D8F /* HistoryViewController.swift in Sources */,
 				DD87C6A41F79AE5B00832D8F /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -722,7 +706,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.foopert.ParkSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ParkSpace/ParkSpace-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -740,7 +724,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.foopert.ParkSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "ParkSpace/ParkSpace-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -6,7 +6,7 @@ import ChameleonFramework
 import GooglePlaces
 import Firebase
 
-class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSAutocompleteViewControllerDelegate {
+class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegate {
     //MARK: Outlets
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var registerSpotButton: UIButton!
@@ -43,8 +43,6 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.revealViewController().delegate = self
-        sideMenus()
         setupProperties()
         setupUIElements()
     }
@@ -155,15 +153,6 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
         return minutesSinceMidnight
     }
     
-    func sideMenus() {
-        if revealViewController() != nil {
-            navBarButton.addTarget(revealViewController, action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-            revealViewController().rearViewRevealWidth = 275
-            revealViewController().rightViewRevealWidth = 160
-            dismissPicker()
-        }
-    }
-    
     func dismissPicker() {
         view.endEditing(true)
     }
@@ -218,7 +207,6 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
     }
     
     fileprivate func setupUIElements() {
-        navBarButton.tintColor = UIColor.darkGray
         registerSpotButton.layer.cornerRadius = 6
         addressFieldButton.layer.borderWidth = 1
         addressFieldButton.layer.borderColor = UIColor.darkGray.cgColor

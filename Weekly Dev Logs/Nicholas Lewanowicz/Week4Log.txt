@@ -1,0 +1,5 @@
+Week 4 Dev log:
+
+2hrs: Practice presentation with team
+3hrs: Research the reliability of firebase functions.
+3hrs: Discussed with team firebase functions vs amazon AWS
