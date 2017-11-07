@@ -25,7 +25,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     override func viewDidLoad() {
         super.viewDidLoad()
         // Call sidemenu on load
-        
+        self.navigationController?.isNavigationBarHidden = true
         do {
             // Set the map style by passing the URL of the local file.
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {

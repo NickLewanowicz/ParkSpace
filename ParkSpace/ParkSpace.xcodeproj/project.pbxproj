@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277928681FB15DA400062A0F /* MapMarkerWindow.swift */; };
 		2779286B1FB15DB700062A0F /* MapMarkerWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */; };
+		2779286D1FB219DB00062A0F /* RegisterSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */; };
 		279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */; };
 		27BB40541F92BBEA00A55E45 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = 27BB40531F92BBEA00A55E45 /* style.json */; };
 		27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */; };
@@ -49,6 +50,7 @@
 		1E69A113383B21642F7AA3AE /* Pods-ParkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		277928681FB15DA400062A0F /* MapMarkerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerWindow.swift; sourceTree = "<group>"; };
 		2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapMarkerWindowView.xib; sourceTree = "<group>"; };
+		2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSpotViewController.swift; sourceTree = "<group>"; };
 		279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		27BB40531F92BBEA00A55E45 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				27E0C7631F62223B00A349C8 /* Main.storyboard */,
 				27E0C7611F62223B00A349C8 /* MapViewController.swift */,
 				DD87C6A51F7A99D000832D8F /* HostViewController.swift */,
+				2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */,
 				DD87C6A31F79AE5B00832D8F /* SettingsViewController.swift */,
 				27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */,
 				27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */,
@@ -548,6 +551,7 @@
 			files = (
 				27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */,
 				277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */,
+				2779286D1FB219DB00062A0F /* RegisterSpotViewController.swift in Sources */,
 				27E0C7621F62223B00A349C8 /* MapViewController.swift in Sources */,
 				279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */,
 				27E0C7601F62223B00A349C8 /* AppDelegate.swift in Sources */,

@@ -13,6 +13,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var navBarButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setStatusBarStyle(.lightContent)
         // Do any additional setup after loading the view.
     }
 
@@ -20,5 +21,4 @@ class SettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 }

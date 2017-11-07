@@ -97,7 +97,17 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
     @IBAction func registerSpotButtonTapped(_ sender: UIButton) {
         if checkIfUserCanRegisterSpot() {
             errorLabel.text = nil
-            registerSpot()
+            let registerSpotViewController = self.storyboard?.instantiateViewController(withIdentifier: "RegisterSpotViewController") as! RegisterSpotViewController
+            registerSpotViewController.spotLatitude = self.spotLatitude
+            registerSpotViewController.spotLongitude = self.spotLongitude
+            registerSpotViewController.spotAddress = self.spotAddress
+            registerSpotViewController.spotCity = self.spotCity
+            registerSpotViewController.spotAvailableDays = self.spotAvailableDays
+            registerSpotViewController.spotAvailableFrom = self.spotAvailableFrom
+            registerSpotViewController.spotAvailableTo = self.spotAvailableTo
+            registerSpotViewController.spotHourlyPrice = self.spotHourlyPrice
+            self.navigationController?.pushViewController(registerSpotViewController, animated: true)
+            //registerSpot()
         }
     }
     
@@ -157,6 +167,10 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
         view.endEditing(true)
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func checkIfUserCanRegisterSpot() -> Bool {
         if spotLatitude == nil || spotLongitude == nil || spotAddress == nil || spotCity == nil {
             errorLabel.text = "Please select a valid address"
@@ -207,6 +221,7 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
     }
     
     fileprivate func setupUIElements() {
+        self.navigationController?.setStatusBarStyle(.lightContent)
         registerSpotButton.layer.cornerRadius = 6
         addressFieldButton.layer.borderWidth = 1
         addressFieldButton.layer.borderColor = UIColor.darkGray.cgColor
