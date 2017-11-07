@@ -12,9 +12,8 @@ import GoogleMaps
 import GooglePlaces
 import ChameleonFramework
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate  {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate  {
 
-    @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var searchBarButton: UIButton!
     @IBOutlet weak var locateButton: UIButton!
     
@@ -127,7 +126,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
                 guard let spot = snapshot.value as? [String : AnyObject] else {
                     return
                 }
-                
                 let latitude = spot["latitude"]
                 let longitude = spot["longitude"]
                 
@@ -154,6 +152,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
             print("locationMarker is nil")
             return false
         }
+        infoWindow.spotData = markerData
+        infoWindow.delegate = self
         infoWindow.alpha = 0.9
         infoWindow.layer.cornerRadius = 12
         infoWindow.layer.borderWidth = 2
@@ -204,7 +204,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         }
         return "\(hours):\(mins) \(zone)"
     }
-
+    
+    func didTapInfoButton(data: NSDictionary) {
+        //TODO: open rent view controller
+        print(data)
+    }
 }
 
 extension MapViewController {
@@ -218,7 +222,6 @@ extension MapViewController {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation = locations.last
-        let center = CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude)
         
         let camera = GMSCameraPosition.camera(withLatitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude, zoom: 16);
         self.gMapView.camera = camera
