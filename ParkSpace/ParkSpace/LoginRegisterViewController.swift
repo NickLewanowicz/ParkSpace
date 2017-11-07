@@ -160,7 +160,6 @@ class LoginRegisterViewController: UIViewController {
                 self.errorLabel.text = "Invalid email or password"
                 return
             }
-            self.mapController?.setupComponents()
             self.dismiss(animated: true, completion: nil)
         })
     }

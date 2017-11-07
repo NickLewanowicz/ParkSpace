@@ -11,7 +11,7 @@ import Firebase
 import GoogleMaps
 import GooglePlaces
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate  {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate  {
 
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var searchBarButton: UIButton!
@@ -41,6 +41,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         locationManager.startUpdatingLocation()
         gMapView.isMyLocationEnabled = true
         gMapView.settings.myLocationButton = true
+        gMapView.delegate = self
         
         self.view.addSubview(gMapView)
         self.view.bringSubview(toFront: searchBarButton)
@@ -74,20 +75,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     func checkIfUserIsLoggedIn() {
         if FIRAuth.auth()?.currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
-        } else {
-            setupComponents()
         }
-    }
-    
-    func setupComponents() {
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
-            return
-        }
-        FIRDatabase.database().reference().child("users").child(uid).observe(.value, with: { (snapshot) in
-            if let dict = snapshot.value as? [String : AnyObject] {
-                print("\(String(describing: dict["name"] as? String))")
-            }
-        })
     }
     
     func handleLogout() {
@@ -147,12 +135,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
                     marker.snippet = "$\(String(format:"%.02f", (rate as? Float)!))/hr"
                     marker.icon = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30)
                     marker.map = self.gMapView
+                    marker.userData = spot
                 })
             }
-            
-            
-            
         }, withCancel: nil)
+    }
+
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        let data = marker.userData! as? NSDictionary
+        print("info: \(data!["address"]!)")
     }
 }
 
