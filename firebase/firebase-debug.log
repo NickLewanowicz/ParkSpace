@@ -1,0 +1,54 @@
+[debug] [2017-10-29T21:19:29.472Z] ----------------------------------------------------------------------
+[debug] [2017-10-29T21:19:29.475Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\khuyn\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-10-29T21:19:29.476Z] CLI Version:   3.13.1
+[debug] [2017-10-29T21:19:29.476Z] Platform:      win32
+[debug] [2017-10-29T21:19:29.476Z] Node Version:  v6.11.5
+[debug] [2017-10-29T21:19:29.476Z] Time:          Sun Oct 29 2017 17:19:29 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:29.476Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-29T21:19:29.490Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-29T21:19:29.491Z] > authorizing via signed-in user
+[debug] [2017-10-29T21:19:29.493Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-10-29T21:19:29.493Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/-sqhmRYf30qPKB6d0M-SUWiFFXICFC5NQj4DiSrDndc',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sun Oct 29 2017 17:19:29 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:29.781Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-29T21:19:29.798Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/parkspace-ios  
+ Sun Oct 29 2017 17:19:29 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:30.453Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-29T21:19:30.455Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/parkspace-ios/tokens  
+ Sun Oct 29 2017 17:19:30 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:31.222Z] <<< HTTP RESPONSE 200
+[info] 1
+[info] 
+[info] === Deploying to 'parkspace-ios'...
+[info] 
+[info] i  deploying functions
+[debug] [2017-10-29T21:19:32.107Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "dependencies": {
+    "firebase-admin": "~5.4.0",
+    "firebase-functions": "^0.7.0"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] [2017-10-29T21:19:32.111Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/parkspace-ios?view=CONSUMER_VIEW  
+ Sun Oct 29 2017 17:19:32 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:32.112Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/parkspace-ios?view=CONSUMER_VIEW  
+ Sun Oct 29 2017 17:19:32 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:32.536Z] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] [2017-10-29T21:19:32.551Z] <<< HTTP RESPONSE 200
+[info] +  runtimeconfig: all necessary APIs are enabled
+[debug] [2017-10-29T21:19:32.552Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/parkspace-ios  
+ Sun Oct 29 2017 17:19:32 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:32.553Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/parkspace-ios/apiKeys  
+ Sun Oct 29 2017 17:19:32 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-10-29T21:19:32.866Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-29T21:19:32.922Z] <<< HTTP RESPONSE 200
