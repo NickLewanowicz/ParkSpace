@@ -8,11 +8,11 @@ admin.initializeApp(functions.config().firebase);
 exports.getNearest = functions.database.ref('/users/{pushId}/location').onWrite(event =>{
     //const config = functions.config();
     //const adminUsersString = config.['access-control-list']['admin-users'];
-    const original = event.data.val();
-    console.log('Uppercasing', event.params.pushId, original);
-    const uppercase = original.toUpperCase();
-
-    return event.data.ref.parent.child('uppercase').set(uppercase);
+    //const original = event.data.val();
+    //console.log('Uppercasing', event.params.pushId, original);
+    //const uppercase = original.toUpperCase();
+    console.log(event);
+    //return event.data.ref.parent.child('uppercase').set(uppercase);
 }
 );
 
