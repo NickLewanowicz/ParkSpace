@@ -111,29 +111,6 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
         }
     }
     
-    //MARK: Supporting Methods
-    func registerSpot() {
-        let ref = FIRDatabase.database().reference().child("spots")
-        let childRef = ref.childByAutoId()
-        let userID = FIRAuth.auth()?.currentUser?.uid
-        let timestamp = Int(NSDate.timeIntervalSinceReferenceDate)
-        let values = ["userID": userID!, "address": spotAddress!, "city": spotCity!, "latitude": spotLatitude!, "longitude": spotLongitude!, "availableDays": spotAvailableDays, "fromTime": spotAvailableFrom!, "toTime": spotAvailableTo!, "rate": spotHourlyPrice!, "timestamp": timestamp] as [String : Any]
-        
-        childRef.updateChildValues(values) { (err, ref) in
-            if err != nil {
-                print(err.debugDescription)
-                self.errorLabel.text = "Network error."
-                return
-            }
-            //Success
-            let alert = UIAlertController(title: "Success!", message: "Your spot at \(self.spotAddress!) has been posted.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
-                self.resetFields()
-            }))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
     func handleFromDatePicker(sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"

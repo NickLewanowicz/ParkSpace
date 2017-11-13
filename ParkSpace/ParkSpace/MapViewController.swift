@@ -121,6 +121,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     func loadMarkersFromDB() {
         let ref = FIRDatabase.database().reference().child("spots")
         ref.observe(.childAdded, with: { (snapshot) in
+            print(snapshot)
             if snapshot.value as? [String : AnyObject] != nil {
                 self.gMapView.clear()
                 guard let spot = snapshot.value as? [String : AnyObject] else {
@@ -145,6 +146,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         if let data = marker.userData! as? NSDictionary {
             markerData = data
         }
+        print(self.gMapView.camera.target.latitude)
         locationMarker = marker
         infoWindow.removeFromSuperview()
         infoWindow = loadNiB()
