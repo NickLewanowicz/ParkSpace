@@ -13,7 +13,7 @@ import GooglePlaces
 import ChameleonFramework
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate  {
-
+    //MARK: Properties
     @IBOutlet weak var searchBarButton: UIButton!
     @IBOutlet weak var locateButton: UIButton!
     
@@ -22,6 +22,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     private var infoWindow = MapMarkerWindow()
     fileprivate var locationMarker : GMSMarker? = GMSMarker()
     
+    //MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Call sidemenu on load
@@ -55,6 +56,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         loadMarkersFromDB()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hide the navigation bar on the this view controller
+        checkIfUserIsLoggedIn()
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    //MARK: Setup Methods
     func setupUIElements() {
         locateButton.tintColor = UIColor.white
         
@@ -67,15 +82,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         self.locateButton.layer.borderColor = UIColor.white.cgColor
         
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        checkIfUserIsLoggedIn()
-    }
-    
+
     func checkIfUserIsLoggedIn() {
         if FIRAuth.auth()?.currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
@@ -104,7 +111,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         
         return newImage!
     }
-
+    
+    func convertMinutesToTime(minutes: Int) -> String {
+        var hours = minutes / 60
+        let mins = (minutes % 60) < 10 ? "0\(minutes % 60)" : "\(minutes % 60)"
+        var zone = "AM"
+        if hours > 12 {
+            hours = hours % 12
+            zone = "PM"
+        }
+        return "\(hours):\(mins) \(zone)"
+    }
+    
+    //MARK: Event Markers
     @IBAction func searchBarTapped(_ sender: UIButton) {
         let autocompleteController = GMSAutocompleteViewController()
         let filter = GMSAutocompleteFilter()
@@ -118,6 +137,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         handleLogout()
     }
     
+    func didTapInfoButton(data: NSDictionary) {
+        let rentViewController = self.storyboard?.instantiateViewController(withIdentifier: "RentViewController") as! RentViewController
+        rentViewController.spotData = data
+        self.navigationController?.pushViewController(rentViewController, animated: true)
+    }
+    
+    //MARK: Firebase Handlers
     func loadMarkersFromDB() {
         let ref = FIRDatabase.database().reference().child("spots")
         ref.observe(.childAdded, with: { (snapshot) in
@@ -141,6 +167,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         }, withCancel: nil)
     }
     
+    //MARK: GMSMapViewDelegate Methods
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         var markerData : NSDictionary?
         if let data = marker.userData! as? NSDictionary {
@@ -194,22 +221,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     func loadNiB() -> MapMarkerWindow {
         let infoWindow = MapMarkerWindow.instanceFromNib() as! MapMarkerWindow
         return infoWindow
-    }
-    
-    func convertMinutesToTime(minutes: Int) -> String {
-        var hours = minutes / 60
-        let mins = (minutes % 60) < 10 ? "0\(minutes % 60)" : "\(minutes % 60)"
-        var zone = "AM"
-        if hours > 12 {
-            hours = hours % 12
-            zone = "PM"
-        }
-        return "\(hours):\(mins) \(zone)"
-    }
-    
-    func didTapInfoButton(data: NSDictionary) {
-        //TODO: open rent view controller
-        print(data)
     }
 }
 

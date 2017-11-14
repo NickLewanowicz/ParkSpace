@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2725352D1FBA977C001FEC38 /* RentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725352C1FBA977C001FEC38 /* RentViewController.swift */; };
 		277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277928681FB15DA400062A0F /* MapMarkerWindow.swift */; };
 		2779286B1FB15DB700062A0F /* MapMarkerWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */; };
 		2779286D1FB219DB00062A0F /* RegisterSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */; };
@@ -48,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		1E69A113383B21642F7AA3AE /* Pods-ParkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2725352C1FBA977C001FEC38 /* RentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentViewController.swift; sourceTree = "<group>"; };
 		277928681FB15DA400062A0F /* MapMarkerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerWindow.swift; sourceTree = "<group>"; };
 		2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapMarkerWindowView.xib; sourceTree = "<group>"; };
 		2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSpotViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				27C0D2B71F6343C100CAFCB6 /* Supporting Files */,
 				27E0C7631F62223B00A349C8 /* Main.storyboard */,
 				27E0C7611F62223B00A349C8 /* MapViewController.swift */,
+				2725352C1FBA977C001FEC38 /* RentViewController.swift */,
 				DD87C6A51F7A99D000832D8F /* HostViewController.swift */,
 				2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */,
 				DD87C6A31F79AE5B00832D8F /* SettingsViewController.swift */,
@@ -552,6 +555,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */,
+				2725352D1FBA977C001FEC38 /* RentViewController.swift in Sources */,
 				277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */,
 				2779286D1FB219DB00062A0F /* RegisterSpotViewController.swift in Sources */,
 				27E0C7621F62223B00A349C8 /* MapViewController.swift in Sources */,
