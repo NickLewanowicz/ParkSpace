@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITableViewDelegate {
 
+    @IBOutlet weak var settingsTableView: UITableView!
     @IBOutlet weak var navBarButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
