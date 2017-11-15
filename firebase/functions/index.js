@@ -11,7 +11,7 @@ exports.getNearest = functions.database.ref('/users/{pushId}/location').onWrite(
         snapshot.forEach(function(userSnapshot) {
 
             //https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
-            console.log(userSnapshot); //displaus email,name,location of all users
+            //console.log(userSnapshot); //displaus email,name,location of all users
             userSnapshot.child("location").forEach(function(element){
             console.log(element.val())
             console.log("hi");
