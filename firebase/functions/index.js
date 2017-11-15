@@ -7,9 +7,16 @@ admin.initializeApp(functions.config().firebase);
 // Realtime Database under the path /messages/:pushId/original
 exports.getNearest = functions.database.ref('/users/{pushId}/location').onWrite(event =>{
    //const original = event.data.val(); //will give you the location of the user
-    return admin.database().ref('users/').once('value', (snapshot) => {
-        var snap = snapshot.val(); //this gives you the list of all the users and their childrens        
-        console.log(snap);
+    return admin.database().ref('/users/').once('value').then(function(snapshot) {
+        snapshot.forEach(function(userSnapshot) {
+            userSnapshot.child("location").forEach(function(element){
+            console.log(element.val())
+            console.log("hi");
+            });
+        });
+        //var snap = snapshot.val(); //this gives you the list of all the users and their childrens        
+        //console.log(snap);
+
     });
 }
 );
