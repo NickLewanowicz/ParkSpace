@@ -9,13 +9,16 @@ exports.getNearest = functions.database.ref('/users/{pushId}/location').onWrite(
    //const original = event.data.val(); //will give you the location of the user
     return admin.database().ref('/users/').once('value').then(function(snapshot) {
         snapshot.forEach(function(userSnapshot) {
-
+            var location = userSnapshot.val();
             //https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
-            //console.log(userSnapshot); //displaus email,name,location of all users
-            userSnapshot.child("location").forEach(function(element){
+            console.log(location.location); //displaus email,name,location of all users
+            /*
+            userSnapshot.child("location").forEach(function(element){ //this goes 1 layer deeper
             console.log(element.val())
             console.log("hi");
             });
+
+            */
         });
         //var snap = snapshot.val(); //this gives you the list of all the users and their childrens        
         //console.log(snap);
