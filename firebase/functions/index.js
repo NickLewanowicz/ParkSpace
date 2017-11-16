@@ -6,44 +6,25 @@ admin.initializeApp(functions.config().firebase);
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
 exports.getNearest = functions.database.ref('/users/{pushId}/location').onWrite(event =>{
-    const user = event.data.val(); //will give you the location of the user
-    //console.log("latitude of currect user: " + user[0]);
-    //console.log("latitude of currect user: " + user[1]);
+    const user = event.data.val(); //will give you the location of the current user. [lat, lng]
     const userLat = user[0];
     const userLng = user[1];
-    admin.database().ref('/spots/').once('value').then(function(snapshot) {
+    var   nearBySpots = new Array();
+    return admin.database().ref('/spots/').once('value').then(function(snapshot) {
         snapshot.forEach(function(spotsSnapshot) {
             var lats = spotsSnapshot.val().latitude;
-            var long = spotsSnapshot.val().longitude
-        //    console.log(lats);
-        //    console.log(long);
-            var distance = getDistanceFromLatLonInKm(userLat,userLng,lats,long)
-            console.log(distance);
-            
+            var long = spotsSnapshot.val().longitude;
+            var distance = getDistanceFromLatLonInKm(userLat,userLng,lats,long);
+
+            if(distance <= 10){ //within 10km
+                console.log("Added spotID: " + spotsSnapshot.key + " distance: " + distance);
+                nearBySpots.push(spotsSnapshot.key);               
+            }      
         });
+        console.log("array length = " + nearBySpots.length);
+        return event.data.ref.parent.child('nearbySpots').set(nearBySpots);
     });
-
-
-    return ;
-   //   return admin.database().ref('/users/').once('value').then(function(snapshot) {
- //       snapshot.forEach(function(userSnapshot) {
- //           var location = userSnapshot.val();
-            //https://firebase.google.com/docs/reference/js/firebase.database.DataSnapshot
- //           console.log(location.location); //displaus emlocation of all users
-            /*
-            userSnapshot.child("location").forEach(function(element){ //this goes 1 layer deeper
-            console.log(element.val())
-            console.log("hi");
-            });
-
-            */
- //       });
-        //var snap = snapshot.val(); //this gives you the list of all the users and their childrens        
-        //console.log(snap);
-
-//    });
-}
-);
+});
 
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     var R = 6371; // Radius of the earth in km
