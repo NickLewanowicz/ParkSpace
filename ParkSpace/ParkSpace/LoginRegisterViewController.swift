@@ -16,6 +16,7 @@ import Firebase
 class LoginRegisterViewController: UIViewController {
     
     //MARK: Outlets
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var signInBtn: UIButton!
     @IBOutlet weak var signUpBtn: UIButton!
@@ -42,7 +43,7 @@ class LoginRegisterViewController: UIViewController {
         let bottomColor = UIColor(hexString: "5C3280")
         
         backgroundView.backgroundColor = UIColor(gradientStyle: UIGradientStyle.topToBottom, withFrame: self.backgroundView.frame, andColors: [topColor!, bottomColor!])
-        
+        contentView.heightAnchor.constraint(equalTo: self.backgroundView.heightAnchor, constant: -60).isActive = true
         registerButton.layer.cornerRadius = 14
         signInSelected.isHidden = true
         passwordCheckmark.isHidden = true
@@ -55,22 +56,19 @@ class LoginRegisterViewController: UIViewController {
         
         confirmPasswordTextField.addTarget(self, action: #selector(comparePasswordTextfieldValues), for: UIControlEvents.editingChanged)
         passwordTextField.addTarget(self, action: #selector(comparePasswordTextfieldValues), for: UIControlEvents.editingChanged)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func addScreenElementsAndCallSetupMethods() {
-        self.view.addSubview(nameTextField)
-        self.view.addSubview(emailTextField)
-        self.view.addSubview(passwordTextField)
-        self.view.addSubview(confirmPasswordTextField)
-        self.view.addSubview(checkbox)
-        self.view.addSubview(termsText)
-        self.view.addSubview(termsBtn)
-        self.view.addSubview(passwordCheckmark)
-        self.view.addSubview(confirmPasswordCheckmark)
-        self.view.addSubview(errorLabel)
+        self.contentView.addSubview(nameTextField)
+        self.contentView.addSubview(emailTextField)
+        self.contentView.addSubview(passwordTextField)
+        self.contentView.addSubview(confirmPasswordTextField)
+        self.contentView.addSubview(checkbox)
+        self.contentView.addSubview(termsText)
+        self.contentView.addSubview(termsBtn)
+        self.contentView.addSubview(passwordCheckmark)
+        self.contentView.addSubview(confirmPasswordCheckmark)
+        self.contentView.addSubview(errorLabel)
         
         setupNameTextField()
         setupEmailTextField()
@@ -162,7 +160,6 @@ class LoginRegisterViewController: UIViewController {
                 self.errorLabel.text = "Invalid email or password"
                 return
             }
-            self.mapController?.setupComponents()
             self.dismiss(animated: true, completion: nil)
         })
     }
@@ -170,23 +167,7 @@ class LoginRegisterViewController: UIViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-        }
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if ((notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil  {
-            if self.view.frame.origin.y != 0{
-                self.view.frame.origin.y = 0
-            }
-        }
-    }
-    
+
     //MARK: Event Handlers
     @IBAction func signInBtnTapped(_ sender: UIButton) {
         if (registerMode) {
@@ -366,28 +347,28 @@ class LoginRegisterViewController: UIViewController {
     //MARK: Setup Methods
     func setupNameTextField() {
         self.nameTextField.topAnchor.constraint(equalTo: self.signUpSelected.bottomAnchor, constant: 25.5).isActive = true
-        self.nameTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.nameTextField.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.nameTextField.widthAnchor.constraint(equalToConstant: 254).isActive = true
         self.nameTextField.heightAnchor.constraint(equalToConstant: 65).isActive = true
     }
     
     func setupEmailTextField() {
         self.emailTextField.topAnchor.constraint(equalTo: self.nameTextField.bottomAnchor, constant: -5.5).isActive = true
-        self.emailTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.emailTextField.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.emailTextField.widthAnchor.constraint(equalToConstant: 254).isActive = true
         self.emailTextField.heightAnchor.constraint(equalToConstant: 65).isActive = true
     }
     
     func setupPasswordTextField() {
         self.passwordTextField.topAnchor.constraint(equalTo: self.emailTextField.bottomAnchor, constant: -5.5).isActive = true
-        self.passwordTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.passwordTextField.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.passwordTextField.widthAnchor.constraint(equalToConstant: 254).isActive = true
         self.passwordTextField.heightAnchor.constraint(equalToConstant: 65).isActive = true
     }
     
     func setupConfirmPasswordTextField() {
         self.confirmPasswordTextField.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: -5.5).isActive = true
-        self.confirmPasswordTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.confirmPasswordTextField.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.confirmPasswordTextField.widthAnchor.constraint(equalToConstant: 254).isActive = true
         self.confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 65).isActive = true
     }
@@ -408,7 +389,7 @@ class LoginRegisterViewController: UIViewController {
     
     func setupTermsBtn() {
         self.termsBtn.topAnchor.constraint(equalTo: self.termsText.bottomAnchor, constant: 5).isActive = true
-        self.termsBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.termsBtn.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         self.termsBtn.widthAnchor.constraint(equalToConstant: 150).isActive = true
         self.termsBtn.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }

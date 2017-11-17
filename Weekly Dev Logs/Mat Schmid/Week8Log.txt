@@ -1,0 +1,3 @@
+Week 8 Dev Log:
+
+~6hrs: Implemented custom map markers to display more information on map screen

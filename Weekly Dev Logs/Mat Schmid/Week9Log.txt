@@ -1,0 +1,3 @@
+Week 9 Dev Log:
+
+~8hrs: Implemented Rent a spot View controller

@@ -1,0 +1,4 @@
+Week 7:
+
+~ 2 playing around with firebase cloud functions
+~ 0.5 begun skeleton of getNearest function 

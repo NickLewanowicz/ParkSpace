@@ -1,0 +1,4 @@
+Week 8:
+
+~3h working on getNearest function
+~3h finding out how to run cloud functions locally

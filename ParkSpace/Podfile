@@ -11,10 +11,13 @@ target 'ParkSpace' do
   pod 'M13Checkbox', :inhibit_warnings => true
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
   pod 'TextFieldEffects'
+  pod 'RSKPlaceholderTextView'
+  pod 'NHRangeSlider'
   
   pod 'Firebase/Core', :inhibit_warnings => true
   pod 'Firebase/Database’
   pod 'Firebase/Auth’
+  pod 'Firebase/Storage’
   
   pod 'GoogleMaps'
   pod 'GooglePlaces'

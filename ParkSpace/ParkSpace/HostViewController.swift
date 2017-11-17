@@ -6,7 +6,7 @@ import ChameleonFramework
 import GooglePlaces
 import Firebase
 
-class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSAutocompleteViewControllerDelegate {
+class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegate {
     //MARK: Outlets
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var registerSpotButton: UIButton!
@@ -43,8 +43,6 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.revealViewController().delegate = self
-        sideMenus()
         setupProperties()
         setupUIElements()
     }
@@ -99,30 +97,17 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
     @IBAction func registerSpotButtonTapped(_ sender: UIButton) {
         if checkIfUserCanRegisterSpot() {
             errorLabel.text = nil
-            registerSpot()
-        }
-    }
-    
-    //MARK: Supporting Methods
-    func registerSpot() {
-        let ref = FIRDatabase.database().reference().child("spots")
-        let childRef = ref.childByAutoId()
-        let userID = FIRAuth.auth()?.currentUser?.uid
-        let timestamp = Int(NSDate.timeIntervalSinceReferenceDate)
-        let values = ["userID": userID!, "address": spotAddress!, "city": spotCity!, "latitude": spotLatitude!, "longitude": spotLongitude!, "availableDays": spotAvailableDays, "fromTime": spotAvailableFrom!, "toTime": spotAvailableTo!, "rate": spotHourlyPrice!, "timestamp": timestamp] as [String : Any]
-        
-        childRef.updateChildValues(values) { (err, ref) in
-            if err != nil {
-                print(err.debugDescription)
-                self.errorLabel.text = "Network error."
-                return
-            }
-            //Success
-            let alert = UIAlertController(title: "Success!", message: "Your spot at \(self.spotAddress!) has been posted.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
-                self.resetFields()
-            }))
-            self.present(alert, animated: true, completion: nil)
+            let registerSpotViewController = self.storyboard?.instantiateViewController(withIdentifier: "RegisterSpotViewController") as! RegisterSpotViewController
+            registerSpotViewController.spotLatitude = self.spotLatitude
+            registerSpotViewController.spotLongitude = self.spotLongitude
+            registerSpotViewController.spotAddress = self.spotAddress
+            registerSpotViewController.spotCity = self.spotCity
+            registerSpotViewController.spotAvailableDays = self.spotAvailableDays
+            registerSpotViewController.spotAvailableFrom = self.spotAvailableFrom
+            registerSpotViewController.spotAvailableTo = self.spotAvailableTo
+            registerSpotViewController.spotHourlyPrice = self.spotHourlyPrice
+            self.navigationController?.pushViewController(registerSpotViewController, animated: true)
+            //registerSpot()
         }
     }
     
@@ -155,17 +140,12 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
         return minutesSinceMidnight
     }
     
-    func sideMenus() {
-        if revealViewController() != nil {
-            navBarButton.addTarget(revealViewController, action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-            revealViewController().rearViewRevealWidth = 275
-            revealViewController().rightViewRevealWidth = 160
-            dismissPicker()
-        }
-    }
-    
     func dismissPicker() {
         view.endEditing(true)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     func checkIfUserCanRegisterSpot() -> Bool {
@@ -218,7 +198,7 @@ class HostViewController: UIViewController, SWRevealViewControllerDelegate, GMSA
     }
     
     fileprivate func setupUIElements() {
-        navBarButton.tintColor = UIColor.darkGray
+        self.navigationController?.setStatusBarStyle(.lightContent)
         registerSpotButton.layer.cornerRadius = 6
         addressFieldButton.layer.borderWidth = 1
         addressFieldButton.layer.borderColor = UIColor.darkGray.cgColor

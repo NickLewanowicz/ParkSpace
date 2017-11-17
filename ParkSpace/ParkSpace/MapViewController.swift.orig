@@ -10,23 +10,30 @@ import UIKit
 import Firebase
 import GoogleMaps
 import GooglePlaces
-import ChameleonFramework
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate  {
-    //MARK: Properties
+<<<<<<< Updated upstream
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate  {
+=======
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, SWRevealViewControllerDelegate, GMSMapViewDelegate {
+>>>>>>> Stashed changes
+
+    @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var searchBarButton: UIButton!
     @IBOutlet weak var locateButton: UIButton!
     
     @IBOutlet weak var gMapView: GMSMapView!
     let locationManager = CLLocationManager()
-    private var infoWindow = MapMarkerWindow()
+    private var infoWindow = ParkSpaceInfoWindow()
     fileprivate var locationMarker : GMSMarker? = GMSMarker()
     
-    //MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Call sidemenu on load
-        self.navigationController?.isNavigationBarHidden = true
+        
+        infoWindow = loadNiB()
+        
+        infoWindow = loadNiB()
+        
         do {
             // Set the map style by passing the URL of the local file.
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
@@ -46,8 +53,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         gMapView.settings.myLocationButton = true
         gMapView.delegate = self
         
-        infoWindow = loadNiB()
-        
         self.view.addSubview(gMapView)
         self.view.bringSubview(toFront: searchBarButton)
         self.view.bringSubview(toFront: locateButton)
@@ -56,20 +61,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         loadMarkersFromDB()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Hide the navigation bar on the this view controller
-        checkIfUserIsLoggedIn()
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Show the navigation bar on other view controllers
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
-    //MARK: Setup Methods
     func setupUIElements() {
         locateButton.tintColor = UIColor.white
         
@@ -82,7 +73,65 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         self.locateButton.layer.borderColor = UIColor.white.cgColor
         
     }
-
+    
+    // MARK: Needed to create the custom info window (this is optional)
+    func loadNiB() -> ParkSpaceInfoWindow {
+        let infoWindow = ParkSpaceInfoWindow.instanceFromNib() as! ParkSpaceInfoWindow
+        return infoWindow
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        if let spotItem = marker.userData as? Spot {
+            NSLog("Did tap marker for cluster item \(spotItem.address)")
+        } else {
+            NSLog("Did tap a normal marker")
+        }
+        locationMarker = marker
+        infoWindow.removeFromSuperview()
+        infoWindow = loadNiB()
+        guard let location = locationMarker?.position else {
+            print("locationMarker is nil")
+            return false
+        }
+        infoWindow.center = mapView.projection.point(for: location)
+        infoWindow.center.y = infoWindow.center.y - sizeForOffset(view: infoWindow)
+        self.view.addSubview(infoWindow)
+        return false
+    }
+    
+    // MARK: Needed to create the custom info window
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        if (locationMarker != nil){
+            guard let location = locationMarker?.position else {
+                print("locationMarker is nil")
+                return
+            }
+            infoWindow.center = mapView.projection.point(for: location)
+            infoWindow.center.y = infoWindow.center.y - sizeForOffset(view: infoWindow)
+        }
+    }
+    
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        let spotWindow = Bundle.main.loadNibNamed("ParkSpaceInfoWindowView", owner: self, options: nil)?.first as! ParkSpaceInfoWindow
+        return spotWindow
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        infoWindow.removeFromSuperview()
+    }
+    
+    func sizeForOffset(view: UIView) -> CGFloat {
+        return  135.0
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        checkIfUserIsLoggedIn()
+    }
+    
     func checkIfUserIsLoggedIn() {
         if FIRAuth.auth()?.currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
@@ -111,19 +160,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         
         return newImage!
     }
-    
-    func convertMinutesToTime(minutes: Int) -> String {
-        var hours = minutes / 60
-        let mins = (minutes % 60) < 10 ? "0\(minutes % 60)" : "\(minutes % 60)"
-        var zone = "AM"
-        if hours > 12 {
-            hours = hours % 12
-            zone = "PM"
-        }
-        return "\(hours):\(mins) \(zone)"
-    }
-    
-    //MARK: Event Markers
+
     @IBAction func searchBarTapped(_ sender: UIButton) {
         let autocompleteController = GMSAutocompleteViewController()
         let filter = GMSAutocompleteFilter()
@@ -137,13 +174,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         handleLogout()
     }
     
-    func didTapInfoButton(data: NSDictionary) {
-        let rentViewController = self.storyboard?.instantiateViewController(withIdentifier: "RentViewController") as! RentViewController
-        rentViewController.spotData = data
-        self.navigationController?.pushViewController(rentViewController, animated: true)
-    }
-    
-    //MARK: Firebase Handlers
     func loadMarkersFromDB() {
         let ref = FIRDatabase.database().reference().child("spots")
         ref.observe(.childAdded, with: { (snapshot) in
@@ -152,74 +182,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
                 guard let spot = snapshot.value as? [String : AnyObject] else {
                     return
                 }
+                
                 let latitude = spot["latitude"]
                 let longitude = spot["longitude"]
+                let address = spot["address"]
+                let rate = spot["rate"]
                 
                 DispatchQueue.main.async(execute: {
                     let marker = GMSMarker()
                     marker.position = CLLocationCoordinate2D(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
+                    marker.title = address as? String
+                    marker.snippet = "$\(String(format:"%.02f", (rate as? Float)!))/hr"
                     marker.icon = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30)
+                    marker.accessibilityLabel = "test"
                     marker.map = self.gMapView
                     marker.userData = spot
                 })
             }
         }, withCancel: nil)
     }
-    
-    //MARK: GMSMapViewDelegate Methods
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        var markerData : NSDictionary?
-        if let data = marker.userData! as? NSDictionary {
-            markerData = data
-        }
-        print(self.gMapView.camera.target.latitude)
-        locationMarker = marker
-        infoWindow.removeFromSuperview()
-        infoWindow = loadNiB()
-        guard let location = locationMarker?.position else {
-            print("locationMarker is nil")
-            return false
-        }
-        infoWindow.spotData = markerData
-        infoWindow.delegate = self
-        infoWindow.alpha = 0.9
-        infoWindow.layer.cornerRadius = 12
-        infoWindow.layer.borderWidth = 2
-        infoWindow.layer.borderColor = UIColor(hexString: "19E698")?.cgColor
-        infoWindow.infoButton.layer.cornerRadius = infoWindow.infoButton.frame.height / 2
-        
-        let address = markerData!["address"]!
-        let rate = markerData!["rate"]!
-        let fromTime = markerData!["fromTime"]!
-        let toTime = markerData!["toTime"]!
-        
-        infoWindow.addressLabel.text = address as? String
-        infoWindow.priceLabel.text = "$\(String(format:"%.02f", (rate as? Float)!))/hr"
-        infoWindow.availibilityLabel.text = "\(convertMinutesToTime(minutes: (fromTime as? Int)!)) - \(convertMinutesToTime(minutes: (toTime as? Int)!))"
-        infoWindow.center = mapView.projection.point(for: location)
-        infoWindow.center.y = infoWindow.center.y - 82
-        self.view.addSubview(infoWindow)
-        return false
-    }
-    
-    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        if (locationMarker != nil){
-            guard let location = locationMarker?.position else {
-                print("locationMarker is nil")
-                return
-            }
-            infoWindow.center = mapView.projection.point(for: location)
-            infoWindow.center.y = infoWindow.center.y - 82
-        }
-    }
-    
-    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        infoWindow.removeFromSuperview()
-    }
-    
-    func loadNiB() -> MapMarkerWindow {
-        let infoWindow = MapMarkerWindow.instanceFromNib() as! MapMarkerWindow
-        return infoWindow
+
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        let data = marker.userData! as? NSDictionary
+        print("info: \(data!["address"]!)")
     }
 }
 
@@ -234,6 +219,7 @@ extension MapViewController {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation = locations.last
+        let center = CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude)
         
         let camera = GMSCameraPosition.camera(withLatitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude, zoom: 16);
         self.gMapView.camera = camera
@@ -272,3 +258,16 @@ extension MapViewController {
     }
 }
 
+class Spot: NSObject {
+    var position : CLLocationCoordinate2D
+    var address  : String
+    var availibility : String
+    var rate : String
+    
+    init(position: CLLocationCoordinate2D, address: String, avail: String, rate: String){
+        self.position = position
+        self.address = address
+        self.availibility = avail
+        self.rate = rate
+    }
+}
