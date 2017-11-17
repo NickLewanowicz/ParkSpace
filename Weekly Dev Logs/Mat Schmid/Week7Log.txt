@@ -1,0 +1,3 @@
+Week 7 Dev Log:
+
+~8hrs: Implemented Host a spot view controller

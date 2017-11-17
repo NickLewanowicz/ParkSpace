@@ -1,0 +1,4 @@
+Week 6 Dev Log:
+
+~4hrs: Looked into Apple UI Standards
+~4hrs: Converted app from side menu format to tab bar format
