@@ -147,7 +147,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     func loadMarkersFromDB() {
         let ref = FIRDatabase.database().reference().child("spots")
         ref.observe(.childAdded, with: { (snapshot) in
-            print(snapshot)
             if snapshot.value as? [String : AnyObject] != nil {
                 self.gMapView.clear()
                 guard let spot = snapshot.value as? [String : AnyObject] else {

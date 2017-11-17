@@ -49,6 +49,7 @@ PODS:
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.9)
   - M13Checkbox (3.1.3)
+  - NHRangeSlider (0.2)
   - RSKPlaceholderTextView (2.1.1)
   - TextFieldEffects (1.3.2)
 
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - M13Checkbox
+  - NHRangeSlider
   - RSKPlaceholderTextView
   - TextFieldEffects
 
@@ -87,9 +89,10 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
+  NHRangeSlider: 2ef13d34bd7d48fcdedcde71c018c093992add7d
   RSKPlaceholderTextView: e62914c917a14ab3ec6ab583b451e61122c9f7e7
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
 
-PODFILE CHECKSUM: 8e3cfff0fb7675c8dd8de376d9ea265275c37c1c
+PODFILE CHECKSUM: a2549f4610cabc1ff69a489212380bff0975e2f2
 
 COCOAPODS: 1.3.1
