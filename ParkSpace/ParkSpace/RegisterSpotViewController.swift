@@ -84,7 +84,7 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
     func uploadImage(completion: @escaping (_ url: String?) -> Void) {
         let imageID = NSUUID().uuidString
         let storageRef = FIRStorage.storage().reference().child("spot_images").child("\(imageID).jpg")
-        if let uploadData = UIImageJPEGRepresentation(self.spotImage.image!, 0.2) {
+        if let uploadData = UIImageJPEGRepresentation(self.spotImage.image!, 0.1) {
             storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                 if error != nil {
                     print(error ?? "error")
@@ -109,6 +109,18 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
                 print(err.debugDescription)
                 return
             }
+            self.saveSpotToUser(childRef.key)
+        }
+    }
+    
+    func saveSpotToUser(_ spotID: String) {
+        let userID = FIRAuth.auth()?.currentUser?.uid
+        let ref = FIRDatabase.database().reference().child("users").child(userID!).child("managedSpots")
+        let values = [spotID: 1]
+        ref.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                return
+            }
             //Success
             let alert = UIAlertController(title: "Success!", message: "Your spot at \(self.spotAddress!) has been posted.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
@@ -116,6 +128,7 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
             }))
             self.present(alert, animated: true, completion: nil)
         }
+        
     }
     
     //MARK: ImagePicker Delegate Methods
