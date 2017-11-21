@@ -3,7 +3,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-const stripe = require('stripe')(functions.config().stripe.token),
+const stripe = require('stripe')('sk_test_igto1DWjcLtPJEPexiGyvZgB'),
       currency = functions.config().stripe.currency || 'USD';
 
 // [START chargecustomer]
