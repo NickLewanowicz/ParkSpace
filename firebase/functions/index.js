@@ -17,7 +17,6 @@ exports.createStripeCharge = functions.database.ref('/users/{userId}/charges/{id
   return admin.database().ref(`/users/${event.params.userId}/customer_id`).once('value').then(snapshot => {
     return snapshot.val();
   }).then(customer => {
-    // Create a charge using the pushId as the idempotency key, protecting against double charges 
     const amount = val.amount;
     const idempotency_key = event.params.id;
     let charge = {amount, currency, customer};
@@ -27,15 +26,12 @@ exports.createStripeCharge = functions.database.ref('/users/{userId}/charges/{id
       // If the result is successful, write it back to the database
       return event.data.adminRef.set(response);
     }, error => {
-      // We want to capture errors and render them in a user-friendly way, while
-      // still logging an exception with Stackdriver
       return event.data.adminRef.child('error').set(userFacingMessage(error)).then(() => {
         return reportError(error, {user: event.params.userId});
       });
     }
   );
 });
-// [END chargecustomer]]
 
 // When a user is created, register them with Stripe
 exports.createStripeCustomer = functions.auth.user().onCreate(event => {
@@ -75,14 +71,7 @@ exports.cleanupUser = functions.auth.user().onDelete(event => {
   });
 });
 
-// To keep on top of errors, we should raise a verbose error report with Stackdriver rather
-// than simply relying on console.error. This will calculate users affected + send you email
-// alerts, if you've opted into receiving them.
-// [START reporterror]
 function reportError(err, context = {}) {
-  // This is the name of the StackDriver log stream that will receive the log
-  // entry. This name can be any valid log stream name, but must contain "err"
-  // in order for the error to be picked up by StackDriver Error Reporting.
   const logName = 'errors';
   const log = logging.log(logName);
 
@@ -120,7 +109,6 @@ function userFacingMessage(error) {
 
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the
-// Realtime Database under the path /messages/:pushId/original
 exports.getNearest = functions.database.ref('/users/{pushId}/location').onWrite(event =>{
     const user = event.data.val(); //will give you the location of the current user. [lat, lng]
     const userLat = user[0];
