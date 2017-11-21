@@ -1,10 +1,12 @@
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const token = 'sk_test_igto1DWjcLtPJEPexiGyvZgB'
+const customCurrency = 'USD'
 admin.initializeApp(functions.config().firebase);
 
-const stripe = require('stripe')('sk_test_igto1DWjcLtPJEPexiGyvZgB'),
-      currency = functions.config().stripe.currency || 'USD';
+const stripe = require('stripe')(token),
+      currency = customCurrency || 'USD';
 
 // [START chargecustomer]
 // Charge the Stripe customer whenever an amount is written to the Realtime database
