@@ -15,9 +15,8 @@ import ChameleonFramework
 class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate  {
     //MARK: Properties
     @IBOutlet weak var searchBarButton: UIButton!
-    @IBOutlet weak var locateButton: UIButton!
-    
     @IBOutlet weak var gMapView: GMSMapView!
+    
     let locationManager = CLLocationManager()
     private var infoWindow = MapMarkerWindow()
     fileprivate var locationMarker : GMSMarker? = GMSMarker()
@@ -50,7 +49,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         
         self.view.addSubview(gMapView)
         self.view.bringSubview(toFront: searchBarButton)
-        self.view.bringSubview(toFront: locateButton)
         
         setupUIElements()
         loadMarkersFromDB()
@@ -71,16 +69,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     
     //MARK: Setup Methods
     func setupUIElements() {
-        locateButton.tintColor = UIColor.white
         
         self.searchBarButton.layer.cornerRadius = 8
         self.searchBarButton.layer.borderWidth = 1
         self.searchBarButton.layer.borderColor = UIColor.white.cgColor
-        
-        self.locateButton.layer.cornerRadius = 8
-        self.locateButton.layer.borderWidth = 1
-        self.locateButton.layer.borderColor = UIColor.white.cgColor
-        
     }
 
     func checkIfUserIsLoggedIn() {
@@ -131,10 +123,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         autocompleteController.delegate = self
         autocompleteController.autocompleteFilter = filter
         present(autocompleteController, animated: true, completion: nil)
-    }
-
-    @IBAction func locateButtonTapped(_ sender: UIButton) {
-        handleLogout()
     }
     
     func didTapInfoButton(data: NSDictionary) {
