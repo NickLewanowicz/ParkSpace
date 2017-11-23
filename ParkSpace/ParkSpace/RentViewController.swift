@@ -9,10 +9,11 @@
 import UIKit
 import ChameleonFramework
 import NHRangeSlider
+import Stripe
 
 let imageCache = NSCache<NSString, AnyObject>()
 
-class RentViewController: UIViewController, NHRangeSliderViewDelegate {
+class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymentMethodsViewControllerDelegate {
     
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
@@ -36,6 +37,7 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate {
     var sliderView : NHRangeSliderView?
     var arrayOfDays : [UIButton] = []
     var arrayOfAvailableDays : [Int] = []
+    var arrayOfDayLabels :[String] = []
     var spotData : NSDictionary?
     var selectedDay : Int?
     
@@ -103,24 +105,40 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate {
         rentButton.layer.cornerRadius = 6    
         
         arrayOfAvailableDays = spotData!["availableDays"] as? NSArray as! [Int]
+        let currDayIndex = convertToProperIndex(Calendar.current.dateComponents([.weekday], from: Date()).weekday!)
+        arrayOfDayLabels = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+        for i in stride(from: currDayIndex, to: currDayIndex + 7, by: 1) {
+            arrayOfDays[i - currDayIndex].setTitle(arrayOfDayLabels[i % 7], for: .normal)
+        }
         for (index, day) in arrayOfDays.enumerated() {
             day.layer.cornerRadius = 4
             day.layer.borderWidth = 1
             day.layer.borderColor = UIColor.darkGray.cgColor
-            if arrayOfAvailableDays[index] == 0 {
+            if arrayOfAvailableDays[(index + currDayIndex) % 7] == 0 {
                 day.backgroundColor = UIColor(hexString: "F7F7F7")
                 day.layer.borderColor = UIColor(hexString: "dbdbdb")?.cgColor
                 day.setTitleColor(UIColor(hexString: "dbdbdb"), for: .normal)
                 day.isEnabled = false
             }
         }
+        
+    }
+    
+    func convertToProperIndex(_ day: Int) -> Int {
+        var newIndex = day - 2
+        if newIndex < 0 {
+            newIndex = 6
+        }
+        return newIndex
     }
     
     func setupSpotImage() {
-        if let imgURL = spotData!["imageURL"] as? String {
+        if let imgURL = spotData!["imageURL"] as? String, imgURL != "None" {
             //check cache for image first
+            self.spotImageButton.loadingIndicator(show: true)
             if let cachedImage = imageCache.object(forKey: imgURL as NSString) as? UIImage {
                 self.spotImageButton.setImage(cachedImage, for: .normal)
+                self.spotImageButton.loadingIndicator(show: false)
                 return
             }
             
@@ -129,12 +147,14 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate {
                 //download hit an error so lets return out
                 if let error = error {
                     print(error)
+                    self.spotImageButton.loadingIndicator(show: false)
                     return
                 }
                 DispatchQueue.main.async(execute: {
                     if let downloadedImage = UIImage(data: data!) {
                         imageCache.setObject(downloadedImage, forKey: imgURL as NSString)
                         self.spotImageButton.setImage(downloadedImage, for: .normal)
+                        self.spotImageButton.loadingIndicator(show: false)
                     }
                 })
             }).resume()
@@ -176,7 +196,58 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate {
         }
         sender.backgroundColor = UIColor(hexString: "19E698")!
         sender.setTitleColor(UIColor.white, for: .normal)
-        selectedDay = sender.tag - 1
+        let currDayIndex = convertToProperIndex(Calendar.current.dateComponents([.weekday], from: Date()).weekday!)
+        selectedDay = (sender.tag - 1 + currDayIndex) % 7
+        print(arrayOfDayLabels[selectedDay!])
+    }
+    @IBAction func didTapPaymentMethod(_ sender: UIButton) {
+        let customerContext = STPCustomerContext(keyProvider: MainAPIClient.shared)
+        let paymentMethodsViewController = STPPaymentMethodsViewController(configuration: STPPaymentConfiguration.shared(), theme: STPTheme.default(), customerContext: customerContext, delegate: self)
+        let navigationController = UINavigationController(rootViewController: paymentMethodsViewController)
+        present(navigationController, animated: true)
+    }
+    
+    
+    func paymentMethodsViewController(_ paymentMethodsViewController: STPPaymentMethodsViewController, didFailToLoadWithError error: Error) {
+        // Dismiss payment methods view controller
+        dismiss(animated: true)
+        
+        // Present error to user...
+    }
+    
+    func paymentMethodsViewControllerDidCancel(_ paymentMethodsViewController: STPPaymentMethodsViewController) {
+        // Dismiss payment methods view controller
+        dismiss(animated: true)
+    }
+    
+    func paymentMethodsViewControllerDidFinish(_ paymentMethodsViewController: STPPaymentMethodsViewController) {
+        // Dismiss payment methods view controller
+        dismiss(animated: true)
+    }
+    
+    func paymentMethodsViewController(_ paymentMethodsViewController: STPPaymentMethodsViewController, didSelect paymentMethod: STPPaymentMethod) {
+        // Save selected payment method
+        //selectedPaymentMethod = paymentMethod
+    }
+}
+
+extension UIButton {
+    func loadingIndicator(show: Bool) {
+        if show {
+            let indicator = UIActivityIndicatorView()
+            let buttonHeight = self.bounds.size.height
+            let buttonWidth = self.bounds.size.width
+            indicator.center = CGPoint(x: buttonWidth/2, y: buttonHeight/2)
+            self.addSubview(indicator)
+            indicator.startAnimating()
+        } else {
+            for view in self.subviews {
+                if let indicator = view as? UIActivityIndicatorView {
+                    indicator.stopAnimating()
+                    indicator.removeFromSuperview()
+                }
+            }
+        }
     }
 }
 

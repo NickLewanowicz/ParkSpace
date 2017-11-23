@@ -202,7 +202,6 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
         registerSpotButton.layer.cornerRadius = 6
         addressFieldButton.layer.borderWidth = 1
         addressFieldButton.layer.borderColor = UIColor.darkGray.cgColor
-        
         for day in arrayOfDays {
             day.layer.cornerRadius = 4
             day.layer.borderWidth = 1

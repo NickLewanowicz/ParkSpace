@@ -51,6 +51,7 @@ PODS:
   - M13Checkbox (3.1.3)
   - NHRangeSlider (0.2)
   - RSKPlaceholderTextView (2.1.1)
+  - Stripe (11.3.0)
   - TextFieldEffects (1.3.2)
 
 DEPENDENCIES:
@@ -64,6 +65,7 @@ DEPENDENCIES:
   - M13Checkbox
   - NHRangeSlider
   - RSKPlaceholderTextView
+  - Stripe
   - TextFieldEffects
 
 EXTERNAL SOURCES:
@@ -91,8 +93,9 @@ SPEC CHECKSUMS:
   M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
   NHRangeSlider: 2ef13d34bd7d48fcdedcde71c018c093992add7d
   RSKPlaceholderTextView: e62914c917a14ab3ec6ab583b451e61122c9f7e7
+  Stripe: 3c86dc18af21e59dd559aa15e83cb501248f9903
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
 
-PODFILE CHECKSUM: a2549f4610cabc1ff69a489212380bff0975e2f2
+PODFILE CHECKSUM: 50c676559a6d81734bcd13accfde7eed4b833f3c
 
 COCOAPODS: 1.3.1

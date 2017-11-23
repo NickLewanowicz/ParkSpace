@@ -70,18 +70,24 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
         } else {
             self.spotDescription = descriptionTextView.text
         }
-        uploadImage() { url in
-            if url != nil {
-                self.registerSpot(url!)
-            } else {
-                let alert = UIAlertController(title: "Error", message: "Failed to register spot. Image likely failed to post", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Okay.", style: .default, handler: nil))
+        
+        if self.spotImage.tag == 2 {
+            uploadImage() { url in
+                if url != nil {
+                    self.registerSpot(url!)
+                } else {
+                    let alert = UIAlertController(title: "Error", message: "Failed to register spot. Image likely failed to post", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay.", style: .default, handler: nil))
+                }
             }
+        } else {
+            self.registerSpot(nil)
         }
     }
     
     //MARK: Firebase Handlers
     func uploadImage(completion: @escaping (_ url: String?) -> Void) {
+        
         let imageID = NSUUID().uuidString
         let storageRef = FIRStorage.storage().reference().child("spot_images").child("\(imageID).jpg")
         if let uploadData = UIImageJPEGRepresentation(self.spotImage.image!, 0.1) {
@@ -97,12 +103,13 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
-    func registerSpot(_ imageURL: String) {
+    func registerSpot(_ imageURL: String?) {
+        let spotImageURL = (imageURL != nil) ? imageURL! : "None"
         let ref = FIRDatabase.database().reference().child("spots")
         let childRef = ref.childByAutoId()
         let userID = FIRAuth.auth()?.currentUser?.uid
         let timestamp = Int(NSDate.timeIntervalSinceReferenceDate)
-        let values = ["userID": userID!, "address": spotAddress!, "city": spotCity!, "latitude": spotLatitude!, "longitude": spotLongitude!, "availableDays": spotAvailableDays, "fromTime": spotAvailableFrom!, "toTime": spotAvailableTo!, "rate": spotHourlyPrice!, "timestamp": timestamp, "description": spotDescription!, "imageURL": imageURL] as [String : Any]
+        let values = ["userID": userID!, "address": spotAddress!, "city": spotCity!, "latitude": spotLatitude!, "longitude": spotLongitude!, "availableDays": spotAvailableDays, "fromTime": spotAvailableFrom!, "toTime": spotAvailableTo!, "rate": spotHourlyPrice!, "timestamp": timestamp, "description": spotDescription!, "imageURL": spotImageURL] as [String : Any]
         
         childRef.updateChildValues(values) { (err, ref) in
             if err != nil {

@@ -810,6 +810,9 @@
                                 <state key="normal" title="Payment Method" image="Payment">
                                     <color key="titleColor" red="0.098039215690000001" green="0.90196078430000004" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapPaymentMethod:" destination="f1E-qX-QDO" eventType="touchUpInside" id="NBh-cI-LMG"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When will you be parking here?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXk-cH-kGY">
                                 <rect key="frame" x="48" y="363" width="210" height="15"/>

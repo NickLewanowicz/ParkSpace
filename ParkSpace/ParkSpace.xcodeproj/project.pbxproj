@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2725352D1FBA977C001FEC38 /* RentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725352C1FBA977C001FEC38 /* RentViewController.swift */; };
+		275444761FC53AAF006AC91E /* MainAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275444751FC53AAF006AC91E /* MainAPIClient.swift */; };
 		277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277928681FB15DA400062A0F /* MapMarkerWindow.swift */; };
 		2779286B1FB15DB700062A0F /* MapMarkerWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */; };
 		2779286D1FB219DB00062A0F /* RegisterSpotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */; };
@@ -23,7 +24,6 @@
 		27E0C76A1F62223C00A349C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27E0C7681F62223C00A349C8 /* LaunchScreen.storyboard */; };
 		27E0C7751F62223C00A349C8 /* ParkSpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0C7741F62223C00A349C8 /* ParkSpaceTests.swift */; };
 		27E0C7801F62223C00A349C8 /* ParkSpaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0C77F1F62223C00A349C8 /* ParkSpaceUITests.swift */; };
-		27F3AA261FBBB7880034B3C3 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3AA251FBBB7870034B3C3 /* Spot.swift */; };
 		33E25C71475646E936483E19 /* Pods_ParkSpaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB312A9A1E0E8644C0DD598F /* Pods_ParkSpaceTests.framework */; };
 		62B47156F5F15FCBF36E067E /* Pods_ParkSpace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87913D992E33F19452DF3460 /* Pods_ParkSpace.framework */; };
 		C73F58F511F2F4B3C5C61C9E /* Pods_ParkSpaceUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48041C091B643E2C703AC50 /* Pods_ParkSpaceUITests.framework */; };
@@ -51,6 +51,7 @@
 /* Begin PBXFileReference section */
 		1E69A113383B21642F7AA3AE /* Pods-ParkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2725352C1FBA977C001FEC38 /* RentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentViewController.swift; sourceTree = "<group>"; };
+		275444751FC53AAF006AC91E /* MainAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAPIClient.swift; sourceTree = "<group>"; };
 		277928681FB15DA400062A0F /* MapMarkerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerWindow.swift; sourceTree = "<group>"; };
 		2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapMarkerWindowView.xib; sourceTree = "<group>"; };
 		2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSpotViewController.swift; sourceTree = "<group>"; };
@@ -72,7 +73,6 @@
 		27E0C77B1F62223C00A349C8 /* ParkSpaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParkSpaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27E0C77F1F62223C00A349C8 /* ParkSpaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkSpaceUITests.swift; sourceTree = "<group>"; };
 		27E0C7811F62223C00A349C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27F3AA251FBBB7870034B3C3 /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
 		2E4A1625D2900E24E6419C02 /* Pods-ParkSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpace.release.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpace/Pods-ParkSpace.release.xcconfig"; sourceTree = "<group>"; };
 		5FF254AF6A18088DE4F6170B /* Pods-ParkSpaceUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceUITests/Pods-ParkSpaceUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6B5A76EDE9F1B70062C21CDF /* Pods-ParkSpaceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -126,19 +126,26 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		27C0D2B71F6343C100CAFCB6 /* Supporting Files */ = {
+		2754447E1FC72DE3006AC91E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
 				27C0D2BC1F64207400CAFCB6 /* GoogleService-Info.plist */,
-				27E0C75F1F62223B00A349C8 /* AppDelegate.swift */,
 				27E0C7661F62223C00A349C8 /* Assets.xcassets */,
-				27E0C7681F62223C00A349C8 /* LaunchScreen.storyboard */,
 				27E0C76B1F62223C00A349C8 /* Info.plist */,
 				27BB40531F92BBEA00A55E45 /* style.json */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		27C0D2B71F6343C100CAFCB6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2754447E1FC72DE3006AC91E /* Assets */,
+				27E0C75F1F62223B00A349C8 /* AppDelegate.swift */,
 				279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */,
 				277928681FB15DA400062A0F /* MapMarkerWindow.swift */,
 				2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */,
-				27F3AA251FBBB7870034B3C3 /* Spot.swift */,
+				275444751FC53AAF006AC91E /* MainAPIClient.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -170,6 +177,7 @@
 			children = (
 				27C0D2B71F6343C100CAFCB6 /* Supporting Files */,
 				27E0C7631F62223B00A349C8 /* Main.storyboard */,
+				27E0C7681F62223C00A349C8 /* LaunchScreen.storyboard */,
 				27E0C7611F62223B00A349C8 /* MapViewController.swift */,
 				2725352C1FBA977C001FEC38 /* RentViewController.swift */,
 				DD87C6A51F7A99D000832D8F /* HostViewController.swift */,
@@ -471,6 +479,7 @@
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NHRangeSlider/NHRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/RSKPlaceholderTextView/RSKPlaceholderTextView.framework",
+				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -481,6 +490,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NHRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSKPlaceholderTextView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,13 +572,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */,
+				275444761FC53AAF006AC91E /* MainAPIClient.swift in Sources */,
 				2725352D1FBA977C001FEC38 /* RentViewController.swift in Sources */,
 				277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */,
 				2779286D1FB219DB00062A0F /* RegisterSpotViewController.swift in Sources */,
 				27E0C7621F62223B00A349C8 /* MapViewController.swift in Sources */,
 				279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */,
 				27E0C7601F62223B00A349C8 /* AppDelegate.swift in Sources */,
-				27F3AA261FBBB7880034B3C3 /* Spot.swift in Sources */,
 				DD87C6A61F7A99D000832D8F /* HostViewController.swift in Sources */,
 				DD87C6A41F79AE5B00832D8F /* SettingsViewController.swift in Sources */,
 			);

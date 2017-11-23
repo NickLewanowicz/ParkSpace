@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import ChameleonFramework
 import Firebase
 import GoogleMaps
 import GooglePlaces
+import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         GMSServices.provideAPIKey("AIzaSyBFEqmBamwQCim9xBS6PMumcpFF9vdXNP0")
         GMSPlacesClient.provideAPIKey("AIzaSyCPsH1g95Z5TiS9Q1qnJ5uxSpnDfP-fODA")
+        STPPaymentConfiguration.shared().publishableKey = "pk_test_oUbSs6LnCa9hbeVpV6ggCZS8"
+        
+        STPTheme.default().primaryForegroundColor = UIColor(hexString: "242F3E")
+        STPTheme.default().accentColor = UIColor(hexString: "19E698")
+        
         return true
     }
 
