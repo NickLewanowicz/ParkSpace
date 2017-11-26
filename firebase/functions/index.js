@@ -8,6 +8,42 @@ admin.initializeApp(functions.config().firebase);
 const stripe = require('stripe')(token),
       currency = customCurrency || 'USD';
 
+exports.createEphemeralKey = functions.database.ref('/users/{userId}/stripe/api_version').onWrite(event => {
+  var api = event.data.val(); // gives us api version
+//  var cust_id = event.val();  this doesnt work
+//  console.log(event);
+//  console.log(api);
+  return admin.database().ref(`/users/${event.params.userId}/stripe/customer_id`).once('value').then(snapshot => {
+    return snapshot.val();
+  }).then(customer => {
+//      console.log(customer);
+//      console.log(customer.val());
+        const cust_id = customer;
+        console.log('api: ' , api);
+        stripe.ephemeralKeys.create(
+          {customer: cust_id},
+          {stripe_version: "2015-10-12"}
+        ).then((key) => {
+          //res.status(200).json(key);
+          console.log(key);
+          return event.data.ref.parent.child('ephemeral_key').set(key);
+        }).catch((err) => {
+          console.log(key);
+          //res.status(500).end();
+        });
+  });
+
+});      
+/*  stripe.ephemeralKeys.create(
+    {customer: req.customerId},
+    {stripe_version: stripe_version}
+  ).then((key) => {
+    res.status(200).json(key);
+  }).catch((err) => {
+    res.status(500).end();
+  });
+*/
+      
 // [START chargecustomer]
 // Charge the Stripe customer whenever an amount is written to the Realtime database
 exports.createStripeCharge = functions.database.ref('/users/{userId}/charges/{id}').onWrite(event => {
@@ -19,6 +55,7 @@ exports.createStripeCharge = functions.database.ref('/users/{userId}/charges/{id
   return admin.database().ref(`/users/${event.params.userId}/customer_id`).once('value').then(snapshot => {
     return snapshot.val();
   }).then(customer => {
+
     const amount = val.amount;
     const idempotency_key = event.params.id;
     let charge = {amount, currency, customer};
