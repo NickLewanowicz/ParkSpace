@@ -795,6 +795,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="didTapRentButton:" destination="f1E-qX-QDO" eventType="touchUpInside" id="kvO-Es-kx5"/>
                                     <action selector="registerSpotButtonTapped:" destination="WO6-Vj-rJ6" eventType="touchUpInside" id="7yK-F6-Nb4"/>
                                     <action selector="registerSpotButtonTapped:" destination="OcY-DS-HHK" eventType="touchUpInside" id="ebb-dV-b5z"/>
                                 </connections>
