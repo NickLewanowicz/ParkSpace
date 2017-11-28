@@ -1208,6 +1208,7 @@
         </scene>
     </scenes>
     <resources>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         <image name="faqIcon2" width="50" height="50"/>
 =======
@@ -1217,6 +1218,16 @@
         <image name="phoneIcon" width="50" height="50"/>
         <image name="profileIcon" width="50" height="50"/>
         <image name="noImage" width="800" height="600"/>
+=======
+        <image name="faqIcon2" width="50" height="50"/>
+        <image name="locate" width="17" height="19"/>
+<<<<<<< HEAD
+        <image name="noImage" width="800" height="600"/>
+=======
+        <image name="phoneIcon" width="50" height="50"/>
+        <image name="profileIcon" width="50" height="50"/>
+>>>>>>> Spiced up settings menu
+>>>>>>> Added Contact and FAQ to settings, fluffed up settings page
         <image name="ps_Host a Space" width="23" height="31"/>
         <image name="ps_Map" width="18" height="18"/>
         <image name="ps_Settings" width="23" height="23"/>
