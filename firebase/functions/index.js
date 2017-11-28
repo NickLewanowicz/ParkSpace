@@ -25,10 +25,10 @@ exports.createEphemeralKey = functions.database.ref('/users/{userId}/stripe/api_
           {stripe_version: "2015-10-12"}
         ).then((key) => {
           //res.status(200).json(key);
-          console.log(key);
+          //console.log(key);
           return event.data.ref.parent.child('ephemeral_key').set(key);
         }).catch((err) => {
-          console.log(key);
+          //console.log(key);
           //res.status(500).end();
         });
   });
@@ -46,39 +46,48 @@ exports.createEphemeralKey = functions.database.ref('/users/{userId}/stripe/api_
       
 // [START chargecustomer]
 // Charge the Stripe customer whenever an amount is written to the Realtime database
-exports.createStripeCharge = functions.database.ref('/users/{userId}/charges/{id}').onWrite(event => {
+exports.createStripeCharge = functions.database.ref('/users/{userId}/stripe/charges/{id}').onWrite(event => {
   const val = event.data.val();
+  const data = event.data;
+  //console.log(val)
   // This onWrite will trigger whenever anything is written to the path, so
   // noop if the charge was deleted, errored out, or the Stripe API returned a result (id exists) 
   if (val === null || val.id || val.error) return null;
   // Look up the Stripe customer id written in createStripeCustomer
-  return admin.database().ref(`/users/${event.params.userId}/customer_id`).once('value').then(snapshot => {
+  return admin.database().ref(`/users/${event.params.userId}/stripe/customer_id`).once('value').then(snapshot => {
     return snapshot.val();
   }).then(customer => {
-
+    console.log(customer); //gives us customer id
     const amount = val.amount;
-    const idempotency_key = event.params.id;
+    const currency = "cad";
+    
+    const source = val.source;
     let charge = {amount, currency, customer};
     if (val.source !== null) charge.source = val.source;
-    return stripe.charges.create(charge, {idempotency_key});
-  }).then(response => {
-      // If the result is successful, write it back to the database
-      return event.data.adminRef.set(response);
-    }, error => {
-      return event.data.adminRef.child('error').set(userFacingMessage(error)).then(() => {
-        return reportError(error, {user: event.params.userId});
-      });
-    }
-  );
+    let charge_obj = stripe.charges.create({
+      amount: amount,
+      currency: currency,
+      source: source, // obtained with Stripe.js
+      customer: customer,
+      description: "Charge for benjamin.robinson@example.com"
+    }).then( chrge => {
+    
+      //console.log(charges.uid);
+      return event.data.ref.set(chrge);
+      //return admin.database().ref(`/users/${data.uid}/stripe/charges/${val.uid}`).set(chrge);
+    });
+    
+  });
 });
 
 // When a user is created, register them with Stripe
+
 exports.createStripeCustomer = functions.auth.user().onCreate(event => {
   const data = event.data;
   return stripe.customers.create({
     email: data.email
   }).then(customer => {
-    return admin.database().ref(`/users/${data.uid}/customer_id`).set(customer.id);
+    return admin.database().ref(`/users/${data.uid}/stripe/customer_id`).set(customer.id);
   });
 });
 
