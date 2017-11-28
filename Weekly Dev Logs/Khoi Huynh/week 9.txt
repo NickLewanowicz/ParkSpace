@@ -1,0 +1,6 @@
+Week 9:
+
+- completed getNearest function
+~ 4h worked on Stripe implementation
+    - createEphemeralKey function
+    - createStripeCustomer function

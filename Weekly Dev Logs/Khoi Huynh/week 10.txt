@@ -1,0 +1,9 @@
+Week 10:
+
+- completed createEphemeralKey and createStripeCustomer functions
+~ 4h worked on Stripe implementation
+    - createStripeCharge function
+    - successful test payments
+
+~ 4h filming for D4 video
+~ 3h helping to edit video
