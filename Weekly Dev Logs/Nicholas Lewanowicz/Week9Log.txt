@@ -1,0 +1,4 @@
+Week 9 Dev Log:
+
+-3hrs: Work with khoi to complete integration of getNearest() function with UI for firebase
+-6hrs: Began implementation for Stripe payments ephemeralkey and create user

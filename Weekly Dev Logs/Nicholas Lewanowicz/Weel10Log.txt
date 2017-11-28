@@ -1,0 +1,4 @@
+Week 10 Dev Log:
+
+-4hrs: Complete implementation for Stripe payments
+-2hrs: Record transactions to DB
