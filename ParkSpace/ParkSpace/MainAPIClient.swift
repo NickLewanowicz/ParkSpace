@@ -25,8 +25,36 @@ class MainAPIClient: NSObject, STPEphemeralKeyProvider {
                 if error != nil {
                     print("error")
                 }
-                //success
             }
         }, withCancel: nil)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("ephemeral_key") {
+                ref.child("ephemeral_key").observeSingleEvent(of: .value, with: { (snapkey) in
+                    guard let json = snapkey.value as? [String : AnyObject] else {
+                        return
+                    }
+                    completion(json, nil)
+                }, withCancel: { (err) in
+                    completion(nil, nil)
+                })
+                
+            }
+        }, withCancel: nil)
+        
+    }
+    
+    func createCharge(source: String, amount: Int, completion: @escaping (NSError?) -> Void) {
+        let randomUID = NSUUID().uuidString
+        let userUID = FIRAuth.auth()?.currentUser?.uid
+        let ref = FIRDatabase.database().reference().child("users").child(userUID!).child("stripe").child("charges").child(randomUID)
+        let values = ["source": source,
+                      "amount": amount] as [String : Any]
+        ref.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            if err != nil {
+                print("error")
+            }
+            completion(nil)
+        })
     }
 }

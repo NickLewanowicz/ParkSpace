@@ -13,7 +13,11 @@ import Stripe
 
 let imageCache = NSCache<NSString, AnyObject>()
 
-class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymentMethodsViewControllerDelegate {
+protocol RentViewControllerDelegate: class {
+    func didRentSpot()
+}
+
+class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymentContextDelegate {
     
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
@@ -40,9 +44,19 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
     var arrayOfDayLabels :[String] = []
     var spotData : NSDictionary?
     var selectedDay : Int?
+    var chargedPrice : Int?
+    
+    private var customerContext: STPCustomerContext?
+    private var paymentContext: STPPaymentContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        customerContext = STPCustomerContext(keyProvider: MainAPIClient.shared)
+        paymentContext = STPPaymentContext(customerContext: customerContext!)
+        
+        paymentContext?.delegate = self
+        paymentContext?.hostViewController = self
         
         setupProperties()
         setupUIElements()
@@ -96,6 +110,7 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         let rate = spotData!["rate"] as? Double
         timeRangeLabel.text = "\(convertMinutesToTime(minutes: lowerVal)) - \(convertMinutesToTime(minutes: upperVal))"
         priceLabel.text = "Price: $\(String(format: "%.2f", (Double(minuteRange / 60) * rate!)))CAD"
+        self.chargedPrice = Int((Double(minuteRange / 60) * rate!) * 100)
     }
     
     func setupUIElements() {
@@ -168,6 +183,7 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         let rate = spotData!["rate"] as? Double
         priceLabel.text = "Price: $\(String(format: "%.2f", (Double(minuteRange / 60) * rate!)))CAD"
         timeRangeLabel.text = "\(convertMinutesToTime(minutes: lowerVal)) - \(convertMinutesToTime(minutes: upperVal))"
+        self.chargedPrice = Int((Double(minuteRange / 60) * rate!) * 100)
     }
     
     func convertMinutesToTime(minutes: Int) -> String {
@@ -200,34 +216,49 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         selectedDay = (sender.tag - 1 + currDayIndex) % 7
         print(arrayOfDayLabels[selectedDay!])
     }
+    
+    func reloadPaymentMethod() {
+        guard let selectedPaymentMethod = paymentContext?.selectedPaymentMethod else {
+            paymentButton.setImage(#imageLiteral(resourceName: "Payment"), for: .normal)
+            paymentButton.setTitle("Payment Method", for: .normal)
+            return
+        }
+        paymentButton.setImage(selectedPaymentMethod.image, for: .normal)
+        paymentButton.setTitle(selectedPaymentMethod.label, for: .normal)
+    }
+    
     @IBAction func didTapPaymentMethod(_ sender: UIButton) {
-        let customerContext = STPCustomerContext(keyProvider: MainAPIClient.shared)
-        let paymentMethodsViewController = STPPaymentMethodsViewController(configuration: STPPaymentConfiguration.shared(), theme: STPTheme.default(), customerContext: customerContext, delegate: self)
-        let navigationController = UINavigationController(rootViewController: paymentMethodsViewController)
-        present(navigationController, animated: true)
+        paymentContext?.presentPaymentMethodsViewController()
     }
     
-    
-    func paymentMethodsViewController(_ paymentMethodsViewController: STPPaymentMethodsViewController, didFailToLoadWithError error: Error) {
-        // Dismiss payment methods view controller
-        dismiss(animated: true)
-        
-        // Present error to user...
+    @IBAction func didTapRentButton(_ sender: UIButton) {
+        paymentContext?.requestPayment()
     }
     
-    func paymentMethodsViewControllerDidCancel(_ paymentMethodsViewController: STPPaymentMethodsViewController) {
-        // Dismiss payment methods view controller
-        dismiss(animated: true)
+    func paymentContextDidChange(_ paymentContext: STPPaymentContext) {
+        reloadPaymentMethod()
     }
     
-    func paymentMethodsViewControllerDidFinish(_ paymentMethodsViewController: STPPaymentMethodsViewController) {
-        // Dismiss payment methods view controller
-        dismiss(animated: true)
+    func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPErrorBlock) {
+        let source = paymentResult.source.stripeID
+        MainAPIClient.shared.createCharge(source: source, amount: self.chargedPrice!) { (err) in
+            if err != nil {
+                print("error")
+            }
+            let alert = UIAlertController(title: "Success!", message: "You have rented the spot at \(self.spotData!["address"] as! String) from \(self.convertMinutesToTime(minutes: Int((self.sliderView?.lowerValue)!))) to \(self.convertMinutesToTime(minutes: Int((self.sliderView?.upperValue)!))).", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
+                _ = self.navigationController?.popToRootViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
-    func paymentMethodsViewController(_ paymentMethodsViewController: STPPaymentMethodsViewController, didSelect paymentMethod: STPPaymentMethod) {
-        // Save selected payment method
-        //selectedPaymentMethod = paymentMethod
+    func paymentContext(_ paymentContext: STPPaymentContext, didFailToLoadWithError error: Error) {
+        //success
+    }
+    
+    func paymentContext(_ paymentContext: STPPaymentContext, didFinishWith status: STPPaymentStatus, error: Error?) {
+        //success
     }
 }
 
