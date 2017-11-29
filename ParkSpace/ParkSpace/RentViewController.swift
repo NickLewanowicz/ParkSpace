@@ -17,7 +17,7 @@ protocol RentViewControllerDelegate: class {
     func didRentSpot()
 }
 
-class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymentContextDelegate {
+class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymentContextDelegate, MainAPIDelegate {
     
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
@@ -45,18 +45,18 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
     var spotData : NSDictionary?
     var selectedDay : Int?
     var chargedPrice : Int?
+    var ephKeyLoaded : Bool?
+    var delegate : RentViewControllerDelegate?
     
     private var customerContext: STPCustomerContext?
     private var paymentContext: STPPaymentContext?
     
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        customerContext = STPCustomerContext(keyProvider: MainAPIClient.shared)
-        paymentContext = STPPaymentContext(customerContext: customerContext!)
-        
-        paymentContext?.delegate = self
-        paymentContext?.hostViewController = self
+        self.ephKeyLoaded = false
+        setupStripePaymentContext()
         
         setupProperties()
         setupUIElements()
@@ -68,6 +68,7 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         setupSpotImage()
     }
     
+    //MARK: Setup methods
     func setupProperties() {
         self.descriptionTextView.isEditable = false
         arrayOfDays = [mondayButton, tuesdayButton, wednesdayButton, thursdayButton, fridayButton, saturdayButton, sundayButton]
@@ -84,6 +85,14 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         addressLabel.text = address as? String
         rateLabel.text = "$\(String(format:"%.02f", (rate as? Float)!))/hr"
         descriptionTextView.text = description
+    }
+    
+    func setupStripePaymentContext() {
+        customerContext = STPCustomerContext(keyProvider: MainAPIClient.shared)
+        paymentContext = STPPaymentContext(customerContext: customerContext!)
+        
+        paymentContext?.delegate = self
+        paymentContext?.hostViewController = self
     }
     
     fileprivate func setupRangeSlider() {
@@ -139,14 +148,6 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         
     }
     
-    func convertToProperIndex(_ day: Int) -> Int {
-        var newIndex = day - 2
-        if newIndex < 0 {
-            newIndex = 6
-        }
-        return newIndex
-    }
-    
     func setupSpotImage() {
         if let imgURL = spotData!["imageURL"] as? String, imgURL != "None" {
             //check cache for image first
@@ -176,14 +177,20 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         }
     }
     
-    func sliderValueChanged(slider: NHRangeSlider?) {
-        let lowerVal = Int((slider?.lowerValue)!)
-        let upperVal = Int((slider?.upperValue)!)
-        let minuteRange = upperVal - lowerVal
-        let rate = spotData!["rate"] as? Double
-        priceLabel.text = "Price: $\(String(format: "%.2f", (Double(minuteRange / 60) * rate!)))CAD"
-        timeRangeLabel.text = "\(convertMinutesToTime(minutes: lowerVal)) - \(convertMinutesToTime(minutes: upperVal))"
-        self.chargedPrice = Int((Double(minuteRange / 60) * rate!) * 100)
+    func setupSliderPlacement() {
+        self.sliderView?.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 32).isActive = true
+        self.sliderView?.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 32).isActive = true
+        self.sliderView?.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        self.sliderView?.topAnchor.constraint(equalTo: self.parkLabel.bottomAnchor, constant: 8).isActive = true
+    }
+    
+    //Private Methods
+    func convertToProperIndex(_ day: Int) -> Int {
+        var newIndex = day - 2
+        if newIndex < 0 {
+            newIndex = 6
+        }
+        return newIndex
     }
     
     func convertMinutesToTime(minutes: Int) -> String {
@@ -197,12 +204,17 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         return "\(hours):\(mins) \(zone)"
     }
     
-    func setupSliderPlacement() {
-        self.sliderView?.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 32).isActive = true
-        self.sliderView?.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 32).isActive = true
-        self.sliderView?.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        self.sliderView?.topAnchor.constraint(equalTo: self.parkLabel.bottomAnchor, constant: 8).isActive = true
+    func reloadPaymentMethod() {
+        guard let selectedPaymentMethod = paymentContext?.selectedPaymentMethod else {
+            paymentButton.setImage(#imageLiteral(resourceName: "Payment"), for: .normal)
+            paymentButton.setTitle("Payment Method", for: .normal)
+            return
+        }
+        paymentButton.setImage(selectedPaymentMethod.image, for: .normal)
+        paymentButton.setTitle(selectedPaymentMethod.label, for: .normal)
     }
+    
+    //MARK: UI Event Handlers
     @IBAction func dayButtonTapped(_ sender: UIButton) {
         for day in arrayOfDays {
             if day.backgroundColor == UIColor(hexString: "19E698")! {
@@ -217,17 +229,20 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         print(arrayOfDayLabels[selectedDay!])
     }
     
-    func reloadPaymentMethod() {
-        guard let selectedPaymentMethod = paymentContext?.selectedPaymentMethod else {
-            paymentButton.setImage(#imageLiteral(resourceName: "Payment"), for: .normal)
-            paymentButton.setTitle("Payment Method", for: .normal)
-            return
-        }
-        paymentButton.setImage(selectedPaymentMethod.image, for: .normal)
-        paymentButton.setTitle(selectedPaymentMethod.label, for: .normal)
+    func sliderValueChanged(slider: NHRangeSlider?) {
+        let lowerVal = Int((slider?.lowerValue)!)
+        let upperVal = Int((slider?.upperValue)!)
+        let minuteRange = upperVal - lowerVal
+        let rate = spotData!["rate"] as? Double
+        priceLabel.text = "Price: $\(String(format: "%.2f", (Double(minuteRange / 60) * rate!)))CAD"
+        timeRangeLabel.text = "\(convertMinutesToTime(minutes: lowerVal)) - \(convertMinutesToTime(minutes: upperVal))"
+        self.chargedPrice = Int((Double(minuteRange / 60) * rate!) * 100)
     }
     
     @IBAction func didTapPaymentMethod(_ sender: UIButton) {
+        if !self.ephKeyLoaded! {
+            setupStripePaymentContext()
+        }
         paymentContext?.presentPaymentMethodsViewController()
     }
     
@@ -235,6 +250,7 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         paymentContext?.requestPayment()
     }
     
+    //MARK: STPPaymentContextDelegate Methods
     func paymentContextDidChange(_ paymentContext: STPPaymentContext) {
         reloadPaymentMethod()
     }
@@ -243,10 +259,15 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         let source = paymentResult.source.stripeID
         MainAPIClient.shared.createCharge(source: source, amount: self.chargedPrice!) { (err) in
             if err != nil {
-                print("error")
+                let alert = UIAlertController(title: "Error", message: "There was an error with the charge.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
+                    _ = self.navigationController?.popToRootViewController(animated: true)
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
             let alert = UIAlertController(title: "Success!", message: "You have rented the spot at \(self.spotData!["address"] as! String) from \(self.convertMinutesToTime(minutes: Int((self.sliderView?.lowerValue)!))) to \(self.convertMinutesToTime(minutes: Int((self.sliderView?.upperValue)!))).", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
+                self.delegate?.didRentSpot()
                 _ = self.navigationController?.popToRootViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)
@@ -259,6 +280,12 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
     
     func paymentContext(_ paymentContext: STPPaymentContext, didFinishWith status: STPPaymentStatus, error: Error?) {
         //success
+    }
+    
+    func didFailToLoadEphKey(fail: Bool) {
+        if !fail {
+            self.ephKeyLoaded = true
+        }
     }
 }
 
@@ -281,5 +308,3 @@ extension UIButton {
         }
     }
 }
-
-

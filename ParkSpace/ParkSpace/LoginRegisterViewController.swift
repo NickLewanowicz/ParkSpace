@@ -144,7 +144,6 @@ class LoginRegisterViewController: UIViewController {
                 self.errorLabel.text = "Network error"
                 return
             }
-            //self.mapController?.nameLabel.text = values["name"] as? String
             self.dismiss(animated: true, completion: nil)
         }
     }

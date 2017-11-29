@@ -13,6 +13,7 @@ target 'ParkSpace' do
   pod 'TextFieldEffects'
   pod 'RSKPlaceholderTextView'
   pod 'NHRangeSlider'
+  pod 'PKHUD', '~> 4.0'
   
   pod 'Firebase/Core', :inhibit_warnings => true
   pod 'Firebase/Database’

@@ -26,7 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey("AIzaSyCPsH1g95Z5TiS9Q1qnJ5uxSpnDfP-fODA")
         STPPaymentConfiguration.shared().publishableKey = "pk_test_oUbSs6LnCa9hbeVpV6ggCZS8"
         
-        STPTheme.default().primaryForegroundColor = UIColor(hexString: "242F3E")
+        STPTheme.default().primaryBackgroundColor = UIColor(hexString: "2f3d51")
+        STPTheme.default().secondaryBackgroundColor = UIColor(hexString: "242F3E")
+        STPTheme.default().primaryForegroundColor = UIColor(hexString: "FFFFFF")
         STPTheme.default().accentColor = UIColor(hexString: "19E698")
         
         return true
