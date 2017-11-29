@@ -12,7 +12,7 @@ import GoogleMaps
 import GooglePlaces
 import ChameleonFramework
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate, RentViewControllerDelegate, HostViewDelegate  {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate, RentViewControllerDelegate  {
     //MARK: Properties
     @IBOutlet weak var searchBarButton: UIButton!
     @IBOutlet weak var gMapView: GMSMapView!

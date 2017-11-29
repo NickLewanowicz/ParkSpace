@@ -6,11 +6,7 @@ import ChameleonFramework
 import GooglePlaces
 import Firebase
 
-protocol HostViewDelegate: class {
-    func didHostSpot()
-}
-
-class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegate, RegisterSpotDelegate {
+class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegate, RegisterViewDelegate {
     //MARK: Outlets
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var registerSpotButton: UIButton!
@@ -30,9 +26,7 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceSlider: UISlider!
     @IBOutlet weak var errorLabel: UILabel!
-    
-    weak var delegate : HostViewDelegate?
-    
+        
     //MARK: Spot Properties
     var spotLatitude : Double? = nil
     var spotLongitude: Double? = nil
@@ -51,6 +45,11 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
         
         setupProperties()
         setupUIElements()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.resetFields()
     }
     
     //MARK: Event Handlers
@@ -112,7 +111,6 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
             registerSpotViewController.spotAvailableFrom = self.spotAvailableFrom
             registerSpotViewController.spotAvailableTo = self.spotAvailableTo
             registerSpotViewController.spotHourlyPrice = self.spotHourlyPrice
-            registerSpotViewController.delegate = self
             self.navigationController?.pushViewController(registerSpotViewController, animated: true)
             //registerSpot()
         }
@@ -216,8 +214,9 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
         }
     }
     
+    //MARK: Register View Delegate
     func didRegisterSpot() {
-        self.delegate?.didHostSpot()
+        self.resetFields()
     }
 }
 

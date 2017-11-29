@@ -41,11 +41,9 @@ class MainAPIClient: NSObject, STPEphemeralKeyProvider {
     func updateAPIVersion() {
         let uid = FIRAuth.auth()?.currentUser?.uid
         let ref = FIRDatabase.database().reference().child("users").child(uid!)
-        let values = ["api_version": "2015-10-12"]
         ref.observe(.childAdded, with: { (snapshot) in
             if snapshot.hasChild("api_version") {
                 ref.child("stripe").child("api_version").removeValue()
-                ref.child("stripe").updateChildValues(values)
             }
         }, withCancel: nil)
     }
