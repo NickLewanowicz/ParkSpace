@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270B74E81FCF334400888457 /* ProfileCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 270B74E71FCF334400888457 /* ProfileCellView.xib */; };
+		270B74EA1FCF335B00888457 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270B74E91FCF335B00888457 /* ProfileCell.swift */; };
+		270B74EC1FCF355200888457 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270B74EB1FCF355200888457 /* SettingsCell.swift */; };
+		270B74EE1FCF357600888457 /* SettingsCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 270B74ED1FCF357600888457 /* SettingsCellView.xib */; };
+		270B74F01FCF606100888457 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270B74EF1FCF606100888457 /* ProfileViewController.swift */; };
 		2725352D1FBA977C001FEC38 /* RentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725352C1FBA977C001FEC38 /* RentViewController.swift */; };
 		275444761FC53AAF006AC91E /* MainAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275444751FC53AAF006AC91E /* MainAPIClient.swift */; };
 		277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277928681FB15DA400062A0F /* MapMarkerWindow.swift */; };
@@ -50,6 +55,11 @@
 
 /* Begin PBXFileReference section */
 		1E69A113383B21642F7AA3AE /* Pods-ParkSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParkSpaceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParkSpaceTests/Pods-ParkSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		270B74E71FCF334400888457 /* ProfileCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileCellView.xib; sourceTree = "<group>"; };
+		270B74E91FCF335B00888457 /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
+		270B74EB1FCF355200888457 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		270B74ED1FCF357600888457 /* SettingsCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsCellView.xib; sourceTree = "<group>"; };
+		270B74EF1FCF606100888457 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2725352C1FBA977C001FEC38 /* RentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentViewController.swift; sourceTree = "<group>"; };
 		275444751FC53AAF006AC91E /* MainAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAPIClient.swift; sourceTree = "<group>"; };
 		277928681FB15DA400062A0F /* MapMarkerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerWindow.swift; sourceTree = "<group>"; };
@@ -142,10 +152,14 @@
 			children = (
 				2754447E1FC72DE3006AC91E /* Assets */,
 				27E0C75F1F62223B00A349C8 /* AppDelegate.swift */,
+				275444751FC53AAF006AC91E /* MainAPIClient.swift */,
 				279AAFE61FAE9415005A5341 /* KeyboardLayoutConstraint.swift */,
 				277928681FB15DA400062A0F /* MapMarkerWindow.swift */,
 				2779286A1FB15DB700062A0F /* MapMarkerWindowView.xib */,
-				275444751FC53AAF006AC91E /* MainAPIClient.swift */,
+				270B74E91FCF335B00888457 /* ProfileCell.swift */,
+				270B74E71FCF334400888457 /* ProfileCellView.xib */,
+				270B74EB1FCF355200888457 /* SettingsCell.swift */,
+				270B74ED1FCF357600888457 /* SettingsCellView.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -183,6 +197,7 @@
 				DD87C6A51F7A99D000832D8F /* HostViewController.swift */,
 				2779286C1FB219DB00062A0F /* RegisterSpotViewController.swift */,
 				DD87C6A31F79AE5B00832D8F /* SettingsViewController.swift */,
+				270B74EF1FCF606100888457 /* ProfileViewController.swift */,
 				27C0D2B81F6343F600CAFCB6 /* LoginRegisterViewController.swift */,
 				27C0D2B91F6343F600CAFCB6 /* LoginRegisterViewController.xib */,
 			);
@@ -372,11 +387,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270B74E81FCF334400888457 /* ProfileCellView.xib in Resources */,
 				27E0C76A1F62223C00A349C8 /* LaunchScreen.storyboard in Resources */,
 				27C0D2BB1F6343F600CAFCB6 /* LoginRegisterViewController.xib in Resources */,
 				2779286B1FB15DB700062A0F /* MapMarkerWindowView.xib in Resources */,
 				27E0C7671F62223C00A349C8 /* Assets.xcassets in Resources */,
 				27BB40541F92BBEA00A55E45 /* style.json in Resources */,
+				270B74EE1FCF357600888457 /* SettingsCellView.xib in Resources */,
 				27C0D2BD1F64207400CAFCB6 /* GoogleService-Info.plist in Resources */,
 				27E0C7651F62223B00A349C8 /* Main.storyboard in Resources */,
 			);
@@ -575,12 +592,15 @@
 			files = (
 				27C0D2BA1F6343F600CAFCB6 /* LoginRegisterViewController.swift in Sources */,
 				275444761FC53AAF006AC91E /* MainAPIClient.swift in Sources */,
+				270B74EC1FCF355200888457 /* SettingsCell.swift in Sources */,
 				2725352D1FBA977C001FEC38 /* RentViewController.swift in Sources */,
+				270B74EA1FCF335B00888457 /* ProfileCell.swift in Sources */,
 				277928691FB15DA400062A0F /* MapMarkerWindow.swift in Sources */,
 				2779286D1FB219DB00062A0F /* RegisterSpotViewController.swift in Sources */,
 				27E0C7621F62223B00A349C8 /* MapViewController.swift in Sources */,
 				279AAFE71FAE9415005A5341 /* KeyboardLayoutConstraint.swift in Sources */,
 				27E0C7601F62223B00A349C8 /* AppDelegate.swift in Sources */,
+				270B74F01FCF606100888457 /* ProfileViewController.swift in Sources */,
 				DD87C6A61F7A99D000832D8F /* HostViewController.swift in Sources */,
 				DD87C6A41F79AE5B00832D8F /* SettingsViewController.swift in Sources */,
 			);

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ProfileCell" customModule="ParkSpace" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JHg-Vj-c6J">
+                    <rect key="frame" x="10" y="8" width="42" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="JHg-Vj-c6J" secondAttribute="height" multiplier="1:1" id="ttU-Wk-iZF"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$NAME_LABEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juT-Yn-0gs">
+                    <rect key="frame" x="60" y="8" width="309" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="a6B-cw-8ID"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View and Edit Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uW1-JC-DkB">
+                    <rect key="frame" x="60" y="31" width="137" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="137" id="5NS-0o-aNG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="JHg-Vj-c6J" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="0fU-Zz-Gw4"/>
+                <constraint firstItem="uW1-JC-DkB" firstAttribute="top" secondItem="juT-Yn-0gs" secondAttribute="bottom" constant="2" id="6Hf-f2-rHD"/>
+                <constraint firstItem="uW1-JC-DkB" firstAttribute="leading" secondItem="JHg-Vj-c6J" secondAttribute="trailing" constant="8" id="Cbw-V3-HKC"/>
+                <constraint firstItem="JHg-Vj-c6J" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="klY-E4-4er"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="juT-Yn-0gs" secondAttribute="trailing" constant="6" id="kmO-QF-PrE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="uW1-JC-DkB" secondAttribute="bottom" constant="6" id="m7v-nv-POA"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="JHg-Vj-c6J" secondAttribute="bottom" constant="8" id="xk2-hm-Cuk"/>
+                <constraint firstItem="juT-Yn-0gs" firstAttribute="leading" secondItem="JHg-Vj-c6J" secondAttribute="trailing" constant="8" id="yMx-8h-MEX"/>
+                <constraint firstItem="juT-Yn-0gs" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="yri-Op-jCk"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="profileImageView" destination="JHg-Vj-c6J" id="ofL-xh-yjS"/>
+                <outlet property="profileNameLabel" destination="juT-Yn-0gs" id="Y7A-q8-kzj"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="363"/>
+        </view>
+    </objects>
+</document>
