@@ -6,7 +6,11 @@ import ChameleonFramework
 import GooglePlaces
 import Firebase
 
-class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegate {
+protocol HostViewDelegate: class {
+    func didHostSpot()
+}
+
+class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegate, RegisterSpotDelegate {
     //MARK: Outlets
     @IBOutlet weak var navBarButton: UIButton!
     @IBOutlet weak var registerSpotButton: UIButton!
@@ -26,6 +30,8 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceSlider: UISlider!
     @IBOutlet weak var errorLabel: UILabel!
+    
+    weak var delegate : HostViewDelegate?
     
     //MARK: Spot Properties
     var spotLatitude : Double? = nil
@@ -106,6 +112,7 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
             registerSpotViewController.spotAvailableFrom = self.spotAvailableFrom
             registerSpotViewController.spotAvailableTo = self.spotAvailableTo
             registerSpotViewController.spotHourlyPrice = self.spotHourlyPrice
+            registerSpotViewController.delegate = self
             self.navigationController?.pushViewController(registerSpotViewController, animated: true)
             //registerSpot()
         }
@@ -207,6 +214,10 @@ class HostViewController: UIViewController, GMSAutocompleteViewControllerDelegat
             day.layer.borderWidth = 1
             day.layer.borderColor = UIColor.darkGray.cgColor
         }
+    }
+    
+    func didRegisterSpot() {
+        self.delegate?.didHostSpot()
     }
 }
 

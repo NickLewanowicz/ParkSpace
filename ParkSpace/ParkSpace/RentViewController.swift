@@ -14,7 +14,7 @@ import Stripe
 let imageCache = NSCache<NSString, AnyObject>()
 
 protocol RentViewControllerDelegate: class {
-    func didRentSpot()
+    func didRentSpot(id: String)
 }
 
 class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymentContextDelegate, MainAPIDelegate {
@@ -87,6 +87,11 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
         descriptionTextView.text = description
     }
     
+    func setupRefreshEphKey() {
+        MainAPIClient.shared.updateAPIVersion()
+        setupStripePaymentContext()
+    }
+    
     func setupStripePaymentContext() {
         customerContext = STPCustomerContext(keyProvider: MainAPIClient.shared)
         paymentContext = STPPaymentContext(customerContext: customerContext!)
@@ -123,6 +128,9 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
     }
     
     func setupUIElements() {
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(setupRefreshEphKey))
+        
         paymentButton.layer.borderWidth = 1
         paymentButton.layer.borderColor = UIColor(hexString: "19E698")?.cgColor
         paymentButton.layer.cornerRadius = 6
@@ -265,9 +273,11 @@ class RentViewController: UIViewController, NHRangeSliderViewDelegate, STPPaymen
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
+            
+            let id = self.spotData!["spotID"] as! String
             let alert = UIAlertController(title: "Success!", message: "You have rented the spot at \(self.spotData!["address"] as! String) from \(self.convertMinutesToTime(minutes: Int((self.sliderView?.lowerValue)!))) to \(self.convertMinutesToTime(minutes: Int((self.sliderView?.upperValue)!))).", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
-                self.delegate?.didRentSpot()
+                self.delegate?.didRentSpot(id: id)
                 _ = self.navigationController?.popToRootViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)

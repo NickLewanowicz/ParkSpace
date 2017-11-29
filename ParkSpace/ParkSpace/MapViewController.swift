@@ -12,7 +12,7 @@ import GoogleMaps
 import GooglePlaces
 import ChameleonFramework
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate  {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, GMSMapViewDelegate, MapMarkerDelegate, RentViewControllerDelegate, HostViewDelegate  {
     //MARK: Properties
     @IBOutlet weak var searchBarButton: UIButton!
     @IBOutlet weak var gMapView: GMSMapView!
@@ -24,7 +24,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     //MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Call sidemenu on load
+        self.checkIfUserIsLoggedIn()
         self.navigationController?.isNavigationBarHidden = true
         do {
             // Set the map style by passing the URL of the local file.
@@ -128,6 +128,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     func didTapInfoButton(data: NSDictionary) {
         let rentViewController = self.storyboard?.instantiateViewController(withIdentifier: "RentViewController") as! RentViewController
         rentViewController.spotData = data
+        rentViewController.delegate = self
         self.navigationController?.pushViewController(rentViewController, animated: true)
     }
     
@@ -137,14 +138,27 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         ref.observe(.childAdded, with: { (snapshot) in
             if snapshot.value as? [String : AnyObject] != nil {
                 self.gMapView.clear()
-                guard let spot = snapshot.value as? [String : AnyObject] else {
+                guard var spot = snapshot.value as? [String : AnyObject] else {
                     return
                 }
+                spot["spotID"] = snapshot.key as AnyObject
+                
                 let latitude = spot["latitude"]
                 let longitude = spot["longitude"]
+                var rented : Bool
+                if let rent = spot["spotRented"] {
+                    rented = (rent as? Bool)!
+                } else {
+                    rented = false
+                }
                 
                 DispatchQueue.main.async(execute: {
                     let marker = GMSMarker()
+                    
+                    let markerImage = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30).withRenderingMode(.alwaysTemplate)
+                    let markerView = UIImageView(image: markerImage)
+                    markerView.tintColor = rented ? .lightGray : UIColor(hexString: "19E698")
+                    marker.iconView = markerView
                     marker.position = CLLocationCoordinate2D(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
                     marker.icon = self.resizeImage(image: UIImage.init(named: "ParkSpaceLogo")!, newWidth: 30)
                     marker.map = self.gMapView
@@ -181,6 +195,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         let fromTime = markerData!["fromTime"]!
         let toTime = markerData!["toTime"]!
         
+        var rented : Bool
+        if let rent = markerData!["spotRented"] {
+            rented = (rent as? Bool)!
+        } else {
+            rented = false
+        }
+        
+        if rented {
+            infoWindow.infoButton.backgroundColor = UIColor.lightGray
+            infoWindow.infoButton.isEnabled = false
+        }
+
         infoWindow.addressLabel.text = address as? String
         infoWindow.priceLabel.text = "$\(String(format:"%.02f", (rate as? Float)!))/hr"
         infoWindow.availibilityLabel.text = "\(convertMinutesToTime(minutes: (fromTime as? Int)!)) - \(convertMinutesToTime(minutes: (toTime as? Int)!))"
@@ -208,6 +234,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
     func loadNiB() -> MapMarkerWindow {
         let infoWindow = MapMarkerWindow.instanceFromNib() as! MapMarkerWindow
         return infoWindow
+    }
+    
+    func didRentSpot(id: String) {
+        let ref = FIRDatabase.database().reference().child("spots").child(id)
+        let values = ["spotRented": true]
+        ref.updateChildValues(values)
+        loadMarkersFromDB()
+    }
+    
+    func didHostSpot() {
+        loadMarkersFromDB()
     }
 }
 

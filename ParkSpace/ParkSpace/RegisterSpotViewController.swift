@@ -12,6 +12,10 @@ import Firebase
 import FirebaseStorage
 import RSKPlaceholderTextView
 
+protocol RegisterSpotDelegate: class {
+    func didRegisterSpot()
+}
+
 class RegisterSpotViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var addressLabel: UILabel!
@@ -19,6 +23,8 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var spotImage: UIImageView!
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
+    
+    weak var delegate : RegisterSpotDelegate?
     
     //MARK: Spot Properties
     var spotLatitude : Double? = nil
@@ -29,7 +35,6 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
     var spotAvailableFrom : Int? = nil //minutes since the start of day
     var spotAvailableTo   : Int? = nil //minutes since the start of day, > spotAvailableFrom
     var spotHourlyPrice   : Double? = nil //Hourly rate in CAD
-    
     var spotDescription : String? = nil
     
     //MARK: Lifecycle methods
@@ -131,7 +136,9 @@ class RegisterSpotViewController: UIViewController, UIImagePickerControllerDeleg
             //Success
             let alert = UIAlertController(title: "Success!", message: "Your spot at \(self.spotAddress!) has been posted.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { (action) in
-                _ = self.navigationController?.popToRootViewController(animated: true)
+                //self.delegate?.didRegisterSpot()
+                //_ = self.navigationController?.popToRootViewController(animated: true)
+                _ = self.tabBarController?.selectedIndex = 0
             }))
             self.present(alert, animated: true, completion: nil)
         }

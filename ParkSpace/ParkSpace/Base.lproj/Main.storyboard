@@ -37,7 +37,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sGI-du-CAm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2720" y="-793"/>
+            <point key="canvasLocation" x="-2722" y="-788"/>
         </scene>
         <!--Host-->
         <scene sceneID="uPv-XY-y5Z">
@@ -1514,10 +1514,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ParkSpaceLogo" width="62" height="86"/>
         <image name="Payment" width="26" height="18"/>
         <image name="faqIcon2" width="50" height="50"/>
-        <image name="ParkSpaceLogo" width="62" height="86"/>
-        <image name="locate" width="17" height="19"/>
         <image name="noImage" width="800" height="600"/>
         <image name="phoneIcon" width="50" height="50"/>
         <image name="profileIcon" width="50" height="50"/>
