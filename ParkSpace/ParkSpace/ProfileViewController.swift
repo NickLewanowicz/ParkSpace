@@ -16,8 +16,6 @@ class ProfileViewController: UITableViewController {
     let NUM_ROWS_EMAIL_SECTION = 1
     let HEIGHT_FOR_SETTINGS_SECTION : CGFloat = 46
     
-    let settingsCellImages = ["PSS_Profile", "PSS_Contact"]
-
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib.init(nibName: "SettingsCellView", bundle: nil), forCellReuseIdentifier: "SettingsCell")

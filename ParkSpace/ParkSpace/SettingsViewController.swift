@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Alertift
 
 class SettingsViewController: UITableViewController {
     let NUM_SECTIONS = 3
@@ -101,23 +102,33 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            print("Profile")
             let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
             self.navigationController?.pushViewController(profileViewController, animated: true)
         case 1:
             switch indexPath.row {
                 case 0:
-                    print("Preferences")
+                    let preferencesViewController = self.storyboard?.instantiateViewController(withIdentifier: "PreferencesView") as! PreferencesViewController
+                    self.navigationController?.pushViewController(preferencesViewController, animated: true)
                 case 1:
-                    print("FAQ")
+                    let faqViewController = self.storyboard?.instantiateViewController(withIdentifier: "FAQView")
+                    self.navigationController?.pushViewController(faqViewController!, animated: true)
                 case 2:
-                    print("Contact US")
+                    let contactViewController = self.storyboard?.instantiateViewController(withIdentifier: "ContactView")
+                    self.navigationController?.pushViewController(contactViewController!, animated: true)
                 default:
                     print("Error: Row")
             }
         case 2:
-            print("Sign Out")
-            self.handleLogout()
+            Alertift.alert(title: "Sign Out", message: "Are you sure want to sign out of ParkSpace?")
+                .action(.destructive("Sign Out")) { _ in
+                    self.handleLogout()
+                }
+                .action(.cancel("Cancel")) { _ in
+                    self.tableView.reloadData()
+                }
+                .show(on: self, completion: {
+                    self.tableView.reloadData()
+                })
         default:
             print("Error: Section")
         }
