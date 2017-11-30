@@ -31,14 +31,25 @@ class PreferencesViewController: UITableViewController {
         return HEIGHT_FOR_SECTION
     }
     
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return "Night Mode is currently under construction"
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellSwitch = UISwitch(frame: .zero) as UISwitch
+        cellSwitch.isOn = true
+        cellSwitch.addTarget(self, action: #selector(switchTriggered), for: .valueChanged)
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
         cell.cellLabel.text = "Night Mode"
         cell.cellImageView.image = #imageLiteral(resourceName: "PSS_NightMode")
-        cell.accessoryType = .disclosureIndicator
+        cell.accessoryView = cellSwitch
         cell.contentMode = .scaleAspectFit
         
         return cell
+    }
+    
+    func switchTriggered(sender: UISwitch) {
+        print("switched")
     }
     
 }
