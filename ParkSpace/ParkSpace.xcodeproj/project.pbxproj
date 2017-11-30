@@ -315,7 +315,7 @@
 				TargetAttributes = {
 					27E0C75B1F62223B00A349C8 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = W437UJ336X;
+						DevelopmentTeam = BNS58ZR5ZP;
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
@@ -768,11 +768,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = W437UJ336X;
+				DEVELOPMENT_TEAM = BNS58ZR5ZP;
 				INFOPLIST_FILE = ParkSpace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.foopert.ParkSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matschmid.ParkSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -786,11 +786,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = W437UJ336X;
+				DEVELOPMENT_TEAM = BNS58ZR5ZP;
 				INFOPLIST_FILE = ParkSpace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.foopert.ParkSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.matschmid.ParkSpace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;

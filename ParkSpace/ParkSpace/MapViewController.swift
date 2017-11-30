@@ -137,7 +137,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSAutocom
         let ref = FIRDatabase.database().reference().child("spots")
         ref.observe(.childAdded, with: { (snapshot) in
             if snapshot.value as? [String : AnyObject] != nil {
-                self.gMapView.clear()
+                //self.gMapView.clear()
                 guard var spot = snapshot.value as? [String : AnyObject] else {
                     return
                 }
