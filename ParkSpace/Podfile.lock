@@ -3,6 +3,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
+  - Cheers (2.0.0)
   - Firebase/Auth (3.15.0):
     - Firebase/Core
     - FirebaseAuth (= 3.1.1)
@@ -58,6 +59,7 @@ PODS:
 DEPENDENCIES:
   - Alertift (~> 2.0)
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - Cheers
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -82,6 +84,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alertift: 2b28b3ba3af73141390f329153f85aee9a56b2a8
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  Cheers: bacb4a95f04cf0fa25ee7f78e900c71eca8673ba
   Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
@@ -99,6 +102,6 @@ SPEC CHECKSUMS:
   Stripe: 3c86dc18af21e59dd559aa15e83cb501248f9903
   TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
 
-PODFILE CHECKSUM: 21c8805dceb4ee2a0a660da10de6b7375b019859
+PODFILE CHECKSUM: a86fffe95cadf94c85b219bf78356d52e5d770b0
 
 COCOAPODS: 1.3.1

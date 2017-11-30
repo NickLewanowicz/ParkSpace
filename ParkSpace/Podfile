@@ -24,6 +24,7 @@ target 'ParkSpace' do
   pod 'GooglePlaces'
   
   pod 'Stripe'
+  pod 'Cheers'
 
   target 'ParkSpaceTests' do
     inherit! :search_paths
