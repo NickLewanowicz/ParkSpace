@@ -11,14 +11,18 @@ import Firebase
 import Alertift
 
 class ProfileViewController: UITableViewController {
-    let NUM_SECTIONS = 2
+    let NUM_SECTIONS = 3
     let NUM_ROWS_NAME_SECTION = 1
     let NUM_ROWS_EMAIL_SECTION = 1
     let HEIGHT_FOR_SETTINGS_SECTION : CGFloat = 46
     
+    var arrayOfSpotIDS = [String]()
+    var arrayOfSpotAddresses = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib.init(nibName: "SettingsCellView", bundle: nil), forCellReuseIdentifier: "SettingsCell")
+        getManagedSpotsArray()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,6 +41,8 @@ class ProfileViewController: UITableViewController {
             return NUM_ROWS_NAME_SECTION
         case 1:
             return NUM_ROWS_EMAIL_SECTION
+        case 2:
+            return self.arrayOfSpotAddresses.count
         default:
             return 0
         }
@@ -52,6 +58,8 @@ class ProfileViewController: UITableViewController {
             return "Name"
         case 1:
             return "Email"
+        case 2:
+            return "Managed Spots"
         default:
             return nil
         }
@@ -72,13 +80,37 @@ class ProfileViewController: UITableViewController {
             cell.cellImageView.contentMode = .scaleAspectFit
             cell.accessoryType = .disclosureIndicator
             return cell
-        } else {
+        } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
             cell.cellLabel.text = FIRAuth.auth()?.currentUser?.email
             cell.cellImageView.image = #imageLiteral(resourceName: "PSS_Contact")
             cell.accessoryType = .disclosureIndicator
             return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
+            cell.cellLabel.text = self.arrayOfSpotAddresses[indexPath.row]
+            cell.cellImageView.image = #imageLiteral(resourceName: "PSS_Spot")
+            cell.selectionStyle = .none
+            return cell
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == 2 {
+            return true
+        }
+        return false
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") {action in
+            self.arrayOfSpotIDS.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+        return [deleteAction]
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -105,7 +137,7 @@ class ProfileViewController: UITableViewController {
                 .show(on: self, completion: {
                     self.tableView.reloadData()
                 })
-        } else {
+        } else if indexPath.section == 1 {
             Alertift.alert(title: "Sign in", message: "In order to change your email, please sign in.")
                 .textField { textField in
                     textField.placeholder = "Email"
@@ -149,6 +181,8 @@ class ProfileViewController: UITableViewController {
                 .show(on: self, completion: {
                     self.tableView.reloadData()
                 })
+        } else {
+            
         }
     }
     
@@ -164,5 +198,33 @@ class ProfileViewController: UITableViewController {
         let userRef = FIRDatabase.database().reference().child("users").child(uid!)
         let values = ["email": newEmail]
         userRef.updateChildValues(values)
+    }
+    
+    func getManagedSpotsArray() {
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        let userRef = FIRDatabase.database().reference().child("users").child(uid!).child("managedSpots")
+        userRef.observe(.childAdded, with: { (snapshot) in
+            self.arrayOfSpotIDS.append(snapshot.key)
+            DispatchQueue.main.async(execute: {
+                self.getSpotAddresses()
+                self.tableView.reloadData()
+            })
+        }, withCancel: nil)
+    }
+    
+    func getSpotAddresses() {
+        let ref = FIRDatabase.database().reference().child("spots")
+        ref.observe(.childAdded, with: { (snapshot) in
+            let id = snapshot.key
+            if self.arrayOfSpotIDS.contains(id) {
+                guard let dict = snapshot.value as? [String : AnyObject] else {
+                    return
+                }
+                if let address = dict["address"], !self.arrayOfSpotAddresses.contains(address as! String) {
+                    self.arrayOfSpotAddresses.append(address as! String)
+                    self.tableView.reloadData()
+                }
+            }
+        }, withCancel: nil)
     }
 }

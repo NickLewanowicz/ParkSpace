@@ -50,6 +50,7 @@ class PreferencesViewController: UITableViewController {
             cell.cellImageView.image = #imageLiteral(resourceName: "PSS_NightMode")
             cell.accessoryView = nightSwitch
             cell.contentMode = .scaleAspectFit
+            cell.selectionStyle = .none
             return cell
         } else {
             let coolSwitch = UISwitch(frame: .zero) as UISwitch
@@ -59,6 +60,7 @@ class PreferencesViewController: UITableViewController {
             cell.cellLabel.text = "Cool Mode"
             cell.cellImageView.image = #imageLiteral(resourceName: "PSS_FAQ")
             cell.accessoryView = coolSwitch
+            cell.selectionStyle = .none
             cell.contentMode = .scaleAspectFit
             return cell
         }
@@ -69,8 +71,6 @@ class PreferencesViewController: UITableViewController {
     }
     
     func coolSwitchTriggered(sender: UISwitch) {
-        print("cool switched")
-        
         if sender.isOn {
             startConfetti()
         } else {
@@ -81,6 +81,7 @@ class PreferencesViewController: UITableViewController {
     func setupConfetti() {
         view.addSubview(cheerView)
         cheerView.config.particle = .confetti
+        cheerView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: 0)
     }
     
     func startConfetti() {
