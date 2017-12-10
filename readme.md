@@ -1,6 +1,6 @@
 ParkSpace Application Development View
 There is always a spot!
-If you have any issues with our product or service, please submit and issue or email us below! We are happy to help!
+- If you have any issues with our product or service, please submit and issue or email us below! We are happy to help!
 ![IMG](https://i.imgur.com/JeFpQgA.png)
 
 | Name  | Email | 
